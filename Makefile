@@ -10,7 +10,7 @@ TARGET = blinkstick
 all: $(SRCS) $(TARGET)
 
 $(TARGET): 	$(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(TARGET) $(OBJS) $(LFLAGS) $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(TARGET).app $(OBJS) $(LFLAGS) $(LIBS)
 
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@

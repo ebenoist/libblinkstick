@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -g -Wall
 LFLAGS = -L/usr/local/Cellar/libusb/1.0.9/lib/
 INCLUDES = -I/usr/local/include/libusb-1.0/
-SRCS = ./src/blinkstick.c
+SRCS = ./src/blinkstick.c ./src/libblinkstick.c
 OBJS = $(SRCS:.c=.o)
 TARGET = blinkstick.app
 

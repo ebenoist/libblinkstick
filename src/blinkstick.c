@@ -13,8 +13,11 @@ void parse_args(char **flags) {
 int main(int argc, char **argv) {
   parse_args(argv);
   blinkstick_device *device = find_blinkstick();
+  /* rgb_color *color = rgb_color_factory(255, 255, 255); */
 
   if (device) {
+    /* set_color(color, device); */
+    off(device);
     printf("Woah!\n");
   }
 

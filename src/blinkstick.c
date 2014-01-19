@@ -33,8 +33,8 @@ int main(int argc, char **argv) {
     set_color(color, device);
   }
 
-  free(color);
-  free(device);
+  destroy_color(color);
+  destroy_blinkstick(device);
   return 0;
 }
 

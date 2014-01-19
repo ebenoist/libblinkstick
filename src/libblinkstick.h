@@ -13,12 +13,12 @@ struct blinkstick_device;
 typedef struct blinkstick_device blinkstick_device;
 
 struct blinkstick_device {
-  libusb_device_handle * handle;
+  libusb_device_handle* handle;
+  libusb_context* usb_context;
 };
 
 void set_debug_true();
 blinkstick_device* find_blinkstick();
 void set_color(rgb_color *color, blinkstick_device *device);
 void off(blinkstick_device *device);
-// @handle.control_transfer(:bmRequestType => 0x20, :bRequest => 0x9, :wValue => 0x1, :wIndex => 0x0000, :dataOut => 1.chr + value.red.to_i.chr + value.green.to_i.chr + value.blue.to_i.chr)
-
+void destroy_blinkstick(blinkstick_device *device);

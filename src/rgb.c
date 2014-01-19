@@ -21,3 +21,8 @@ unsigned char * rgb_to_char(rgb_color *color) {
   return bytes;
 }
 
+void destroy_color(rgb_color *color) {
+  free(color->bytes);
+  free(color);
+}
+

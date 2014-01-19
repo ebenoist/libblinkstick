@@ -44,8 +44,6 @@ libusb_device_handle* claim_device(libusb_device* device) {
   open_device_result = libusb_open(device, &dev_handle);
 
   if (open_device_result >= 0) {
-    debug("Found and open\n");
-    debug("Got here to claim interface");
     libusb_claim_interface(dev_handle, 0);
     libusb_ref_device(device);
   } else {
@@ -81,24 +79,26 @@ blinkstick_device* find_blinkstick() {
   libusb_device_handle *dev_handle = claim_device(blinkstick);
 
   libusb_free_device_list(devices, 1);
-  /* libusb_exit(context); */ // causes segfault
 
   blinkstick_device *ret = (blinkstick_device*)malloc(sizeof(blinkstick_device));
   ret->handle = dev_handle;
+  ret->usb_context = context;
 
   return ret;
 }
 
 void set_color(rgb_color *color, blinkstick_device *blinkstick) {
   unsigned char *color_to_transfer = color->bytes;
-  if (print_debug) {
-    printf("Setting color: %02x %02x %02x\n", color->bytes[1], color->bytes[2], color->bytes[3]);
-  }
   libusb_control_transfer(blinkstick->handle, 0x20, 0x9, 0x1, 0x0000, color_to_transfer, COLOR_PACKET_SIZE, 2);
-  debug("Set color\n");
 }
 
 void off(blinkstick_device *blinkstick) {
   set_color(rgb_color_factory(0,0,0), blinkstick);
+}
+
+void destroy_blinkstick(blinkstick_device *device) {
+  libusb_close(device->handle);
+  libusb_exit(device->usb_context);
+  free(device);
 }
 

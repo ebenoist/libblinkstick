@@ -36,7 +36,3 @@ int main() {
   return 0;
 }
 ```
-
-## Known Issues
-- Cannot turn off or set a color to 0.
-- Cannot close the USB context.

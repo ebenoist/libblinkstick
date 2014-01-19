@@ -93,7 +93,9 @@ void set_color(rgb_color *color, blinkstick_device *blinkstick) {
 }
 
 void off(blinkstick_device *blinkstick) {
-  set_color(rgb_color_factory(0,0,0), blinkstick);
+  rgb_color *off = rgb_color_factory(0,0,0);
+  set_color(off, blinkstick);
+  destroy_color(off);
 }
 
 void destroy_blinkstick(blinkstick_device *device) {

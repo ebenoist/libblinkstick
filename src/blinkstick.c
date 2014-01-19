@@ -1,4 +1,5 @@
 #include "libblinkstick.h"
+#include <unistd.h>
 
 rgb_color* parse_args(char **flags) {
   rgb_color *color = NULL;
@@ -31,6 +32,8 @@ int main(int argc, char **argv) {
 
   if (device) {
     set_color(color, device);
+    sleep(2);
+    off(device);
   }
 
   destroy_color(color);

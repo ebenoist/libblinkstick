@@ -90,9 +90,11 @@ blinkstick_device* find_blinkstick() {
 }
 
 void set_color(rgb_color *color, blinkstick_device *blinkstick) {
-  char *color_to_transfer = color->bytes;
-  size_t data_length = strlen(color_to_transfer);
-  libusb_control_transfer(blinkstick->handle, 0x20, 0x9, 0x1, 0x0000, (unsigned char *)color_to_transfer, data_length, 2);
+  unsigned char *color_to_transfer = color->bytes;
+  if (print_debug) {
+    printf("Setting color: %02x %02x %02x\n", color->bytes[1], color->bytes[2], color->bytes[3]);
+  }
+  libusb_control_transfer(blinkstick->handle, 0x20, 0x9, 0x1, 0x0000, color_to_transfer, COLOR_PACKET_SIZE, 2);
   debug("Set color\n");
 }
 

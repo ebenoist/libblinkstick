@@ -11,12 +11,13 @@ rgb_color* rgb_color_factory(int red, int green, int blue) {
   return color;
 }
 
-char * rgb_to_char(rgb_color *color) {
-  char* bytes = malloc(sizeof(char[4]));
+unsigned char * rgb_to_char(rgb_color *color) {
+  unsigned char* bytes = malloc(sizeof(unsigned char[4]));
   bytes[0] = '\x01';
-  bytes[1] = (char)(color->red & 0xFF);
-  bytes[2] = (char)(color->green & 0xFF);
-  bytes[3] = (char)(color->blue & 0xFF);
+  bytes[1] = (color->red & 0xff);
+  bytes[2] = (color->green & 0xff);
+  bytes[3] = (color->blue & 0xff);
+
   return bytes;
 }
 

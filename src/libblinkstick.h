@@ -7,6 +7,7 @@
 
 static int const BLINKSTICK_VENDOR_ID = 8352; //"0X20A0";
 static int const BLINKSTICK_PRODUCT_ID = 16869; //"0X41E5";
+static int const COLOR_PACKET_SIZE = 4;
 
 struct blinkstick_device;
 typedef struct blinkstick_device blinkstick_device;

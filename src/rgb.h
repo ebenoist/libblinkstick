@@ -8,8 +8,8 @@ struct rgb_color {
   int red;
   int green;
   int blue;
-  char * bytes;
+  unsigned char * bytes;
 };
 
 rgb_color* rgb_color_factory(int red, int green, int blue);
-char * rgb_to_char(rgb_color *color);
+unsigned char * rgb_to_char(rgb_color *color);

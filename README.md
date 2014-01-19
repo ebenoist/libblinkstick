@@ -1,7 +1,10 @@
-lib blinkstick
+libBlinkStick
 =============
 
-A [blinkstick](http://www.blinkstick.com/) library in C.
+A [blinkstick](http://www.blinkstick.com/) library in C with few dependencies.
+
+## Warning
+This is largely a work in progress. Expect nothing to work, things to change, etc...
 
 ## Example
 

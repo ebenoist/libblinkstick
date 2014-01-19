@@ -1,26 +1,39 @@
 #include "libblinkstick.h"
 
-void parse_args(char **flags) {
-  char * first_flag = flags[1];
+rgb_color* parse_args(char **flags) {
+  rgb_color *color = NULL;
 
-  if(first_flag != NULL) {
-    if ((strcmp(first_flag, "--debug")) || (strcmp(first_flag, "-d"))) {
-      set_debug_true();
+  for (int i = 1; i < sizeof(flags); i++) {
+    if(flags[i] != NULL) {
+      if (strcmp(flags[i], "--debug") == 0) {
+        set_debug_true();
+      }
+
+      if (strcmp(flags[i], "--color") == 0) {
+        char *red, *green, *blue;
+
+        // sloppy
+        red = *(flags + i + 1);
+        green = *(flags + i + 2);
+        blue = *(flags + i + 3);
+
+        color = rgb_color_factory(atoi(red), atoi(green), atoi(blue));
+      }
     }
   }
+
+  return color;
 }
 
 int main(int argc, char **argv) {
-  parse_args(argv);
+  rgb_color *color = parse_args(argv);
   blinkstick_device *device = find_blinkstick();
-  /* rgb_color *color = rgb_color_factory(255, 255, 255); */
 
   if (device) {
-    /* set_color(color, device); */
-    off(device);
-    printf("Woah!\n");
+    set_color(color, device);
   }
 
+  free(color);
   free(device);
   return 0;
 }

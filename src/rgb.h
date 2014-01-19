@@ -8,7 +8,7 @@ struct rgb_color {
   int red;
   int green;
   int blue;
-  char * hex;
+  char * bytes;
 };
 
 rgb_color* rgb_color_factory(int red, int green, int blue);

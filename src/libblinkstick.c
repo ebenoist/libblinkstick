@@ -81,7 +81,7 @@ blinkstick_device* find_blinkstick() {
   libusb_device_handle *dev_handle = claim_device(blinkstick);
 
   libusb_free_device_list(devices, 1);
-  /* libusb_exit(context); */
+  /* libusb_exit(context); */ // causes segfault
 
   blinkstick_device *ret = (blinkstick_device*)malloc(sizeof(blinkstick_device));
   ret->handle = dev_handle;
@@ -90,10 +90,9 @@ blinkstick_device* find_blinkstick() {
 }
 
 void set_color(rgb_color *color, blinkstick_device *blinkstick) {
-  char *color_to_transfer = color->hex;
+  char *color_to_transfer = color->bytes;
   size_t data_length = strlen(color_to_transfer);
-  printf("Setting color: %s\n", color_to_transfer);
-  libusb_control_transfer(blinkstick->handle, 0x20, 0x9, 0x1, 0x0000, (unsigned char *)color_to_transfer, data_length, 1);
+  libusb_control_transfer(blinkstick->handle, 0x20, 0x9, 0x1, 0x0000, (unsigned char *)color_to_transfer, data_length, 2);
   debug("Set color\n");
 }
 

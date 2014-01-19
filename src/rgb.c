@@ -6,14 +6,17 @@ rgb_color* rgb_color_factory(int red, int green, int blue) {
   color->red = red;
   color->green = green;
   color->blue = blue;
-  color->hex = rgb_to_char(color);
+  color->bytes = rgb_to_char(color);
 
   return color;
 }
 
 char * rgb_to_char(rgb_color *color) {
-  char * hex = malloc(sizeof(char[255]));
-  snprintf(hex, sizeof hex, "\\x%02x\\x%02x\\x%02x", color->red, color->green, color->blue);
-  return hex;
+  char* bytes = malloc(sizeof(char[4]));
+  bytes[0] = '\x01';
+  bytes[1] = (char)(color->red & 0xFF);
+  bytes[2] = (char)(color->green & 0xFF);
+  bytes[3] = (char)(color->blue & 0xFF);
+  return bytes;
 }
 

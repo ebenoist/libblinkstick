@@ -6,7 +6,7 @@ AM_PROG_AR
 LT_INIT
 AC_PROG_CC
 
-AC_SUBST([NAME], "libblinkstick")
+AC_SUBST([NAME], "blinkstick")
 AC_SUBST([API_VERSION], ["0.1"])
 AC_SUBST([SO_VERSION], ["0:1:0"])
 

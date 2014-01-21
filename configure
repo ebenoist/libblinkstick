@@ -12255,7 +12255,7 @@ fi
 
 
 
-NAME="libblinkstick"
+NAME="blinkstick"
 
 API_VERSION="0.1"
 

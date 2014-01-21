@@ -82,8 +82,7 @@ build_triplet = @build@
 host_triplet = @host@
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
-	$(dist_noinst_SCRIPTS) $(top_srcdir)/depcomp \
-	$(nobase_example_include_HEADERS)
+	$(dist_noinst_SCRIPTS) $(nobase_example_include_HEADERS)
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -123,20 +122,20 @@ am__installdirs = "$(DESTDIR)$(libdir)" \
 	"$(DESTDIR)$(example_libincludedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-libblinkstick_@API_VERSION@_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
-am_libblinkstick_@API_VERSION@_la_OBJECTS =  \
-	libblinkstick_@API_VERSION@_la-libblinkstick.lo \
-	libblinkstick_@API_VERSION@_la-rgb.lo
-libblinkstick_@API_VERSION@_la_OBJECTS =  \
-	$(am_libblinkstick_@API_VERSION@_la_OBJECTS)
+lib@NAME@_@API_VERSION@_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
+am_lib@NAME@_@API_VERSION@_la_OBJECTS =  \
+	lib@NAME@_@API_VERSION@_la-libblinkstick.lo \
+	lib@NAME@_@API_VERSION@_la-rgb.lo
+lib@NAME@_@API_VERSION@_la_OBJECTS =  \
+	$(am_lib@NAME@_@API_VERSION@_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-libblinkstick_@API_VERSION@_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+lib@NAME@_@API_VERSION@_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
-	$(libblinkstick_@API_VERSION@_la_CFLAGS) $(CFLAGS) \
-	$(libblinkstick_@API_VERSION@_la_LDFLAGS) $(LDFLAGS) -o $@
+	$(lib@NAME@_@API_VERSION@_la_CFLAGS) $(CFLAGS) \
+	$(lib@NAME@_@API_VERSION@_la_LDFLAGS) $(LDFLAGS) -o $@
 SCRIPTS = $(dist_noinst_SCRIPTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -151,9 +150,8 @@ am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
 am__v_at_0 = @
 am__v_at_1 = 
 DEFAULT_INCLUDES = -I.@am__isrc@
-depcomp = $(SHELL) $(top_srcdir)/depcomp
-am__depfiles_maybe = depfiles
-am__mv = mv -f
+depcomp =
+am__depfiles_maybe =
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
@@ -172,8 +170,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libblinkstick_@API_VERSION@_la_SOURCES)
-DIST_SOURCES = $(libblinkstick_@API_VERSION@_la_SOURCES)
+SOURCES = $(lib@NAME@_@API_VERSION@_la_SOURCES)
+DIST_SOURCES = $(lib@NAME@_@API_VERSION@_la_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -246,6 +244,7 @@ LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MKDIR_P = @MKDIR_P@
+NAME = @NAME@
 NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
@@ -324,14 +323,14 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
-lib_LTLIBRARIES = libblinkstick-@API_VERSION@.la
-libblinkstick_@API_VERSION@_la_SOURCES = libblinkstick.c rgb.c
-libblinkstick_@API_VERSION@_la_LDFLAGS = -version-info $(SO_VERSION)
-libblinkstick_@API_VERSION@_la_CFLAGS = $(LIBUSB_CFLAGS)
-libblinkstick_@API_VERSION@_la_LIBADD = $(LIBUSB_LIBS)
-example_includedir = $(includedir)/libblinkstick-$(API_VERSION)
-nobase_example_include_HEADERS = rgb.h libblinkstick.h
-example_libincludedir = $(libdir)/libblinkstick-$(API_VERSION)/include
+lib_LTLIBRARIES = lib@NAME@-@API_VERSION@.la
+lib@NAME@_@API_VERSION@_la_SOURCES = libblinkstick.c rgb.c
+lib@NAME@_@API_VERSION@_la_LDFLAGS = -version-info $(SO_VERSION)
+lib@NAME@_@API_VERSION@_la_CFLAGS = $(LIBUSB_CFLAGS)
+lib@NAME@_@API_VERSION@_la_LIBADD = $(LIBUSB_LIBS)
+example_includedir = $(includedir)/
+nobase_example_include_HEADERS = libblinkstick.h
+example_libincludedir = $(libdir)/@NAME@-$(API_VERSION)/include
 nodist_example_libinclude_HEADERS = libblinkstick.h
 dist_noinst_SCRIPTS = autogen.sh
 all: all-am
@@ -347,9 +346,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign --ignore-deps src/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign src/Makefile
+	  $(AUTOMAKE) --foreign --ignore-deps src/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -404,8 +403,8 @@ clean-libLTLIBRARIES:
 	  rm -f $${locs}; \
 	}
 
-libblinkstick-@API_VERSION@.la: $(libblinkstick_@API_VERSION@_la_OBJECTS) $(libblinkstick_@API_VERSION@_la_DEPENDENCIES) $(EXTRA_libblinkstick_@API_VERSION@_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(libblinkstick_@API_VERSION@_la_LINK) -rpath $(libdir) $(libblinkstick_@API_VERSION@_la_OBJECTS) $(libblinkstick_@API_VERSION@_la_LIBADD) $(LIBS)
+lib@NAME@-@API_VERSION@.la: $(lib@NAME@_@API_VERSION@_la_OBJECTS) $(lib@NAME@_@API_VERSION@_la_DEPENDENCIES) $(EXTRA_lib@NAME@_@API_VERSION@_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(lib@NAME@_@API_VERSION@_la_LINK) -rpath $(libdir) $(lib@NAME@_@API_VERSION@_la_OBJECTS) $(lib@NAME@_@API_VERSION@_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -413,46 +412,20 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libblinkstick_@API_VERSION@_la-libblinkstick.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libblinkstick_@API_VERSION@_la-rgb.Plo@am__quote@
-
 .c.o:
-@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
-@am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ $<
+	$(AM_V_CC)$(COMPILE) -c -o $@ $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
-@am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+	$(AM_V_CC)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
-@am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
+	$(AM_V_CC)$(LTCOMPILE) -c -o $@ $<
 
-libblinkstick_@API_VERSION@_la-libblinkstick.lo: libblinkstick.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libblinkstick_@API_VERSION@_la_CFLAGS) $(CFLAGS) -MT libblinkstick_@API_VERSION@_la-libblinkstick.lo -MD -MP -MF $(DEPDIR)/libblinkstick_@API_VERSION@_la-libblinkstick.Tpo -c -o libblinkstick_@API_VERSION@_la-libblinkstick.lo `test -f 'libblinkstick.c' || echo '$(srcdir)/'`libblinkstick.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libblinkstick_@API_VERSION@_la-libblinkstick.Tpo $(DEPDIR)/libblinkstick_@API_VERSION@_la-libblinkstick.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='libblinkstick.c' object='libblinkstick_@API_VERSION@_la-libblinkstick.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libblinkstick_@API_VERSION@_la_CFLAGS) $(CFLAGS) -c -o libblinkstick_@API_VERSION@_la-libblinkstick.lo `test -f 'libblinkstick.c' || echo '$(srcdir)/'`libblinkstick.c
+lib@NAME@_@API_VERSION@_la-libblinkstick.lo: libblinkstick.c
+	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib@NAME@_@API_VERSION@_la_CFLAGS) $(CFLAGS) -c -o lib@NAME@_@API_VERSION@_la-libblinkstick.lo `test -f 'libblinkstick.c' || echo '$(srcdir)/'`libblinkstick.c
 
-libblinkstick_@API_VERSION@_la-rgb.lo: rgb.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libblinkstick_@API_VERSION@_la_CFLAGS) $(CFLAGS) -MT libblinkstick_@API_VERSION@_la-rgb.lo -MD -MP -MF $(DEPDIR)/libblinkstick_@API_VERSION@_la-rgb.Tpo -c -o libblinkstick_@API_VERSION@_la-rgb.lo `test -f 'rgb.c' || echo '$(srcdir)/'`rgb.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libblinkstick_@API_VERSION@_la-rgb.Tpo $(DEPDIR)/libblinkstick_@API_VERSION@_la-rgb.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rgb.c' object='libblinkstick_@API_VERSION@_la-rgb.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libblinkstick_@API_VERSION@_la_CFLAGS) $(CFLAGS) -c -o libblinkstick_@API_VERSION@_la-rgb.lo `test -f 'rgb.c' || echo '$(srcdir)/'`rgb.c
+lib@NAME@_@API_VERSION@_la-rgb.lo: rgb.c
+	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib@NAME@_@API_VERSION@_la_CFLAGS) $(CFLAGS) -c -o lib@NAME@_@API_VERSION@_la-rgb.lo `test -f 'rgb.c' || echo '$(srcdir)/'`rgb.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -630,7 +603,6 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -677,7 +649,6 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

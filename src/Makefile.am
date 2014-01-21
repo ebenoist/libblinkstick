@@ -1,7 +1,7 @@
 AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
-lib_LTLIBRARIES = @NAME@-@API_VERSION@.la
+lib_LTLIBRARIES = lib@NAME@-@API_VERSION@.la
 
 ## Define the source file list for the "libexample-@API_VERSION@.la"
 ## target.  Note that @API_VERSION@ is not interpreted by Automake and
@@ -11,22 +11,22 @@ lib_LTLIBRARIES = @NAME@-@API_VERSION@.la
 ## rules which invoke the C++ compiler to produce a libtool object file (.lo)
 ## from each source file.  Note that it is not necessary to list header files
 ## which are already listed elsewhere in a _HEADERS variable assignment.
-@NAME@_@API_VERSION@_la_SOURCES = libblinkstick.c rgb.c
+lib@NAME@_@API_VERSION@_la_SOURCES = libblinkstick.c rgb.c
 
 ## Instruct libtool to include ABI version information in the generated shared
 ## library file (.so).  The library ABI version is defined in configure.ac, so
 ## that all version information is kept in one place.
-@NAME@_@API_VERSION@_la_LDFLAGS = -version-info $(SO_VERSION)
-@NAME@_@API_VERSION@_la_CFLAGS = $(LIBUSB_CFLAGS)
-@NAME@_@API_VERSION@_la_LIBADD = $(LIBUSB_LIBS)
+lib@NAME@_@API_VERSION@_la_LDFLAGS = -version-info $(SO_VERSION)
+lib@NAME@_@API_VERSION@_la_CFLAGS = $(LIBUSB_CFLAGS)
+lib@NAME@_@API_VERSION@_la_LIBADD = $(LIBUSB_LIBS)
 
 ## Define the list of public header files and their install location.  The
 ## nobase_ prefix instructs Automake to not strip the directory part from each
 ## filename, in order to avoid the need to define separate file lists for each
 ## installation directory.  This only works if the directory hierarchy in the
 ## source tree matches the hierarchy at the install location, however.
-example_includedir = $(includedir)/@NAME@-$(API_VERSION)
-nobase_example_include_HEADERS = rgb.h libblinkstick.h
+example_includedir = $(includedir)/
+nobase_example_include_HEADERS = libblinkstick.h
 
 ## The generated configuration header is installed in its own subdirectory of
 ## $(libdir).  The reason for this is that the configuration information put
@@ -40,7 +40,7 @@ nobase_example_include_HEADERS = rgb.h libblinkstick.h
 ## configuration header file is generated at configure time and should not be
 ## shipped with the source tarball.
 example_libincludedir = $(libdir)/@NAME@-$(API_VERSION)/include
-nodist_example_libinclude_HEADERS = libblinkstick.h rgb.h
+nodist_example_libinclude_HEADERS = libblinkstick.h
 
 ## Define an independent executable script for inclusion in the distribution
 ## archive.  However, it will not be installed on an end user's system due to

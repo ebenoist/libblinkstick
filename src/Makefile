@@ -82,8 +82,7 @@ build_triplet = x86_64-apple-darwin13.0.0
 host_triplet = x86_64-apple-darwin13.0.0
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
-	$(dist_noinst_SCRIPTS) $(top_srcdir)/depcomp \
-	$(nobase_example_include_HEADERS)
+	$(dist_noinst_SCRIPTS) $(nobase_example_include_HEADERS)
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -151,9 +150,8 @@ am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
 am__v_at_0 = @
 am__v_at_1 = 
 DEFAULT_INCLUDES = -I.
-depcomp = $(SHELL) $(top_srcdir)/depcomp
-am__depfiles_maybe = depfiles
-am__mv = mv -f
+depcomp =
+am__depfiles_maybe =
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
@@ -246,6 +244,7 @@ LTLIBOBJS =
 MAKEINFO = ${SHELL} /Users/ebenoist/development/libblinkstick/missing makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = .././install-sh -c -d
+NAME = blinkstick
 NM = /usr/bin/nm
 NMEDIT = nmedit
 OBJDUMP = false
@@ -329,9 +328,9 @@ libblinkstick_0.1_la_SOURCES = libblinkstick.c rgb.c
 libblinkstick_0.1_la_LDFLAGS = -version-info $(SO_VERSION)
 libblinkstick_0.1_la_CFLAGS = $(LIBUSB_CFLAGS)
 libblinkstick_0.1_la_LIBADD = $(LIBUSB_LIBS)
-example_includedir = $(includedir)/libblinkstick-$(API_VERSION)
-nobase_example_include_HEADERS = rgb.h libblinkstick.h
-example_libincludedir = $(libdir)/libblinkstick-$(API_VERSION)/include
+example_includedir = $(includedir)/
+nobase_example_include_HEADERS = libblinkstick.h
+example_libincludedir = $(libdir)/blinkstick-$(API_VERSION)/include
 nodist_example_libinclude_HEADERS = libblinkstick.h
 dist_noinst_SCRIPTS = autogen.sh
 all: all-am
@@ -347,9 +346,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign --ignore-deps src/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign src/Makefile
+	  $(AUTOMAKE) --foreign --ignore-deps src/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -413,46 +412,20 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/libblinkstick_0.1_la-libblinkstick.Plo
-include ./$(DEPDIR)/libblinkstick_0.1_la-rgb.Plo
-
 .c.o:
-	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
-	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
-	$(am__mv) $$depbase.Tpo $$depbase.Po
-#	$(AM_V_CC)source='$<' object='$@' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(COMPILE) -c -o $@ $<
+	$(AM_V_CC)$(COMPILE) -c -o $@ $<
 
 .c.obj:
-	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
-	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
-	$(am__mv) $$depbase.Tpo $$depbase.Po
-#	$(AM_V_CC)source='$<' object='$@' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+	$(AM_V_CC)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
 .c.lo:
-	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
-	$(LTCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
-	$(am__mv) $$depbase.Tpo $$depbase.Plo
-#	$(AM_V_CC)source='$<' object='$@' libtool=yes \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(LTCOMPILE) -c -o $@ $<
+	$(AM_V_CC)$(LTCOMPILE) -c -o $@ $<
 
 libblinkstick_0.1_la-libblinkstick.lo: libblinkstick.c
-	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libblinkstick_0.1_la_CFLAGS) $(CFLAGS) -MT libblinkstick_0.1_la-libblinkstick.lo -MD -MP -MF $(DEPDIR)/libblinkstick_0.1_la-libblinkstick.Tpo -c -o libblinkstick_0.1_la-libblinkstick.lo `test -f 'libblinkstick.c' || echo '$(srcdir)/'`libblinkstick.c
-	$(AM_V_at)$(am__mv) $(DEPDIR)/libblinkstick_0.1_la-libblinkstick.Tpo $(DEPDIR)/libblinkstick_0.1_la-libblinkstick.Plo
-#	$(AM_V_CC)source='libblinkstick.c' object='libblinkstick_0.1_la-libblinkstick.lo' libtool=yes \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libblinkstick_0.1_la_CFLAGS) $(CFLAGS) -c -o libblinkstick_0.1_la-libblinkstick.lo `test -f 'libblinkstick.c' || echo '$(srcdir)/'`libblinkstick.c
+	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libblinkstick_0.1_la_CFLAGS) $(CFLAGS) -c -o libblinkstick_0.1_la-libblinkstick.lo `test -f 'libblinkstick.c' || echo '$(srcdir)/'`libblinkstick.c
 
 libblinkstick_0.1_la-rgb.lo: rgb.c
-	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libblinkstick_0.1_la_CFLAGS) $(CFLAGS) -MT libblinkstick_0.1_la-rgb.lo -MD -MP -MF $(DEPDIR)/libblinkstick_0.1_la-rgb.Tpo -c -o libblinkstick_0.1_la-rgb.lo `test -f 'rgb.c' || echo '$(srcdir)/'`rgb.c
-	$(AM_V_at)$(am__mv) $(DEPDIR)/libblinkstick_0.1_la-rgb.Tpo $(DEPDIR)/libblinkstick_0.1_la-rgb.Plo
-#	$(AM_V_CC)source='rgb.c' object='libblinkstick_0.1_la-rgb.lo' libtool=yes \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libblinkstick_0.1_la_CFLAGS) $(CFLAGS) -c -o libblinkstick_0.1_la-rgb.lo `test -f 'rgb.c' || echo '$(srcdir)/'`rgb.c
+	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libblinkstick_0.1_la_CFLAGS) $(CFLAGS) -c -o libblinkstick_0.1_la-rgb.lo `test -f 'rgb.c' || echo '$(srcdir)/'`rgb.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -630,7 +603,6 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -677,7 +649,6 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

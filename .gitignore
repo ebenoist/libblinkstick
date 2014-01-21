@@ -22,10 +22,7 @@
 src/.*
 *.pc
 
+# automake
 /autom4te.cache
 /aclocal.m4
-/compile
-/depcomp
-/install-sh
-/missing
 

@@ -264,6 +264,7 @@ LTLIBOBJS =
 MAKEINFO = ${SHELL} /Users/ebenoist/development/libblinkstick/missing makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = ./install-sh -c -d
+NAME = libblinkstick
 NM = /usr/bin/nm
 NMEDIT = nmedit
 OBJDUMP = false

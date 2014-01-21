@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "rgb.h"
 
 static int const BLINKSTICK_VENDOR_ID = 8352; //"0X20A0";
@@ -17,8 +18,13 @@ struct blinkstick_device {
   libusb_context* usb_context;
 };
 
+// PUBLIC
 void set_debug_true();
 blinkstick_device* find_blinkstick();
+// blinkstick_device** find_all();
 void set_color(rgb_color *color, blinkstick_device *device);
 void off(blinkstick_device *device);
+
+// PRIVATE
 void destroy_blinkstick(blinkstick_device *device);
+blinkstick_device* blinkstick_factory(libusb_device_handle *handle, libusb_context *context);

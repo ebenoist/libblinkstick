@@ -77,14 +77,9 @@ blinkstick_device* find_blinkstick() {
   }
 
   libusb_device_handle *dev_handle = claim_device(blinkstick);
-
   libusb_free_device_list(devices, 1);
 
-  blinkstick_device *ret = (blinkstick_device*)malloc(sizeof(blinkstick_device));
-  ret->handle = dev_handle;
-  ret->usb_context = context;
-
-  return ret;
+  return blinkstick_factory(dev_handle, context);
 }
 
 void set_color(rgb_color *color, blinkstick_device *blinkstick) {
@@ -102,5 +97,12 @@ void destroy_blinkstick(blinkstick_device *device) {
   libusb_close(device->handle);
   libusb_exit(device->usb_context);
   free(device);
+}
+
+blinkstick_device* blinkstick_factory(libusb_device_handle *handle, libusb_context *context) {
+  blinkstick_device *device = malloc(sizeof(blinkstick_factory));
+  device->handle = handle;
+  device->usb_context = context;
+  return device;
 }
 

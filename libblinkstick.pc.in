@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: @PACKAGE_NAME@
+Description: C BlinkStick library.
+Version: @PACKAGE_VERSION@
+URL: @PACKAGE_URL@
+Libs: -L${libdir} -llibblinkstick-@API_VERSION@
+Cflags: -I${includedir}/libblinkstick-@API_VERSION@ -I${libdir}/libblinkstick-@API_VERSION@/include
+

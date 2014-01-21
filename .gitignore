@@ -5,6 +5,8 @@
 # Libraries
 *.lib
 *.a
+*.la
+*.lo
 
 # Shared objects (inc. Windows DLLs)
 *.dll
@@ -16,3 +18,14 @@
 *.exe
 *.out
 *.app
+
+src/.*
+*.pc
+
+/autom4te.cache
+/aclocal.m4
+/compile
+/depcomp
+/install-sh
+/missing
+

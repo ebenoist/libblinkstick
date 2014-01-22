@@ -18,6 +18,7 @@
 *.exe
 *.out
 *.app
+*.Po
 
 src/.*
 *.pc
@@ -25,4 +26,8 @@ src/.*
 # automake
 /autom4te.cache
 /aclocal.m4
+*.log
+
+# tests
+*.trs
 

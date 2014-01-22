@@ -11,10 +11,11 @@ AC_SUBST([API_VERSION], ["0.1"])
 AC_SUBST([SO_VERSION], ["0:1:0"])
 
 PKG_CHECK_MODULES([LIBUSB], [libusb-1.0 >= 1.0])
+PKG_CHECK_MODULES([CHECK], [check >= 0.9.10])
 
 # Override the template file name of the generated .pc file, so that there
 # is no need to rename the template file when the API version changes.
-AC_CONFIG_FILES([Makefile src/Makefile
+AC_CONFIG_FILES([Makefile src/Makefile tests/Makefile
                  libblinkstick-${API_VERSION}.pc:libblinkstick.pc.in])
 
 AC_OUTPUT

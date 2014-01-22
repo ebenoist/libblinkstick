@@ -393,7 +393,7 @@ on `(hostname || uname -n) 2>/dev/null | sed 1q`
 "
 
 # Files that config.status was made for.
-config_files=" Makefile src/Makefile libblinkstick-0.1.pc:libblinkstick.pc.in"
+config_files=" Makefile src/Makefile tests/Makefile libblinkstick-0.1.pc:libblinkstick.pc.in"
 config_commands=" depfiles libtool"
 
 ac_cs_usage="\
@@ -728,6 +728,7 @@ do
     "libtool") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
+    "tests/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
     "libblinkstick-${API_VERSION}.pc") CONFIG_FILES="$CONFIG_FILES libblinkstick-${API_VERSION}.pc:libblinkstick.pc.in" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
@@ -797,6 +798,8 @@ S["am__EXEEXT_FALSE"]=""
 S["am__EXEEXT_TRUE"]="#"
 S["LTLIBOBJS"]=""
 S["LIBOBJS"]=""
+S["CHECK_LIBS"]="-L/usr/local/Cellar/check/0.9.11/lib -lcheck "
+S["CHECK_CFLAGS"]="-D_THREAD_SAFE -I/usr/local/Cellar/check/0.9.11/include "
 S["LIBUSB_LIBS"]="-L/usr/local/Cellar/libusb/1.0.9/lib -lusb-1.0 "
 S["LIBUSB_CFLAGS"]="-I/usr/local/Cellar/libusb/1.0.9/include/libusb-1.0 "
 S["PKG_CONFIG_LIBDIR"]=""

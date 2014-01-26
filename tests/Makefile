@@ -90,9 +90,10 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am_blinkstick_tests_OBJECTS =  \
-	blinkstick_tests-libblinkstick_test.$(OBJEXT)
+	blinkstick_tests-blinkstick_tests.$(OBJEXT)
 blinkstick_tests_OBJECTS = $(am_blinkstick_tests_OBJECTS)
-blinkstick_tests_DEPENDENCIES =
+am__DEPENDENCIES_1 =
+blinkstick_tests_DEPENDENCIES = $(am__DEPENDENCIES_1)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
@@ -366,14 +367,14 @@ TEST_LOG_DRIVER = $(SHELL) $(top_srcdir)/test-driver
 TEST_LOG_COMPILE = $(TEST_LOG_COMPILER) $(AM_TEST_LOG_FLAGS) \
 	$(TEST_LOG_FLAGS)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /Users/ebenoist/development/libblinkstick/missing aclocal-1.14
+ACLOCAL = ${SHELL} /Users/ebenoist/libblinkstick/missing aclocal-1.14
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 API_VERSION = 0.1
 AR = ar
-AUTOCONF = ${SHELL} /Users/ebenoist/development/libblinkstick/missing autoconf
-AUTOHEADER = ${SHELL} /Users/ebenoist/development/libblinkstick/missing autoheader
-AUTOMAKE = ${SHELL} /Users/ebenoist/development/libblinkstick/missing automake-1.14
+AUTOCONF = ${SHELL} /Users/ebenoist/libblinkstick/missing autoconf
+AUTOHEADER = ${SHELL} /Users/ebenoist/libblinkstick/missing autoheader
+AUTOMAKE = ${SHELL} /Users/ebenoist/libblinkstick/missing automake-1.14
 AWK = awk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -410,7 +411,7 @@ LIBUSB_LIBS = -L/usr/local/Cellar/libusb/1.0.9/lib -lusb-1.0
 LIPO = lipo
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /Users/ebenoist/development/libblinkstick/missing makeinfo
+MAKEINFO = ${SHELL} /Users/ebenoist/libblinkstick/missing makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = .././install-sh -c -d
 NAME = blinkstick
@@ -438,10 +439,10 @@ SHELL = /bin/sh
 SO_VERSION = 0:1:0
 STRIP = strip
 VERSION = 0.1
-abs_builddir = /Users/ebenoist/development/libblinkstick/tests
-abs_srcdir = /Users/ebenoist/development/libblinkstick/tests
-abs_top_builddir = /Users/ebenoist/development/libblinkstick
-abs_top_srcdir = /Users/ebenoist/development/libblinkstick
+abs_builddir = /Users/ebenoist/libblinkstick/tests
+abs_srcdir = /Users/ebenoist/libblinkstick/tests
+abs_top_builddir = /Users/ebenoist/libblinkstick
+abs_top_srcdir = /Users/ebenoist/libblinkstick
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -470,7 +471,7 @@ host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/ebenoist/development/libblinkstick/install-sh
+install_sh = ${SHELL} /Users/ebenoist/libblinkstick/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -492,10 +493,9 @@ top_builddir = ..
 top_srcdir = ..
 AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
-LD_ADD = ../src/lib@name@-0.1
-blinkstick_tests_SOURCES = minunit.h libblinkstick_test.c
-blinkstick_tests_CFLAGS = -D_THREAD_SAFE -I/usr/local/Cellar/check/0.9.11/include 
-blinkstick_tests_LDADD = -L/usr/local/Cellar/check/0.9.11/lib -lcheck 
+blinkstick_tests_SOURCES = blinkstick_tests.c
+blinkstick_tests_CFLAGS = -D_THREAD_SAFE -I/usr/local/Cellar/check/0.9.11/include  $(LIBUSB_CFLAGS)
+blinkstick_tests_LDADD = -L/usr/local/Cellar/check/0.9.11/lib -lcheck  $(LIBUSB_LIBS) -L../src/ -llibblinkstick
 all: all-am
 
 .SUFFIXES:
@@ -550,7 +550,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/blinkstick_tests-libblinkstick_test.Po
+include ./$(DEPDIR)/blinkstick_tests-blinkstick_tests.Po
 
 .c.o:
 	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -576,19 +576,19 @@ include ./$(DEPDIR)/blinkstick_tests-libblinkstick_test.Po
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(LTCOMPILE) -c -o $@ $<
 
-blinkstick_tests-libblinkstick_test.o: libblinkstick_test.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(blinkstick_tests_CFLAGS) $(CFLAGS) -MT blinkstick_tests-libblinkstick_test.o -MD -MP -MF $(DEPDIR)/blinkstick_tests-libblinkstick_test.Tpo -c -o blinkstick_tests-libblinkstick_test.o `test -f 'libblinkstick_test.c' || echo '$(srcdir)/'`libblinkstick_test.c
-	$(AM_V_at)$(am__mv) $(DEPDIR)/blinkstick_tests-libblinkstick_test.Tpo $(DEPDIR)/blinkstick_tests-libblinkstick_test.Po
-#	$(AM_V_CC)source='libblinkstick_test.c' object='blinkstick_tests-libblinkstick_test.o' libtool=no \
+blinkstick_tests-blinkstick_tests.o: blinkstick_tests.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(blinkstick_tests_CFLAGS) $(CFLAGS) -MT blinkstick_tests-blinkstick_tests.o -MD -MP -MF $(DEPDIR)/blinkstick_tests-blinkstick_tests.Tpo -c -o blinkstick_tests-blinkstick_tests.o `test -f 'blinkstick_tests.c' || echo '$(srcdir)/'`blinkstick_tests.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/blinkstick_tests-blinkstick_tests.Tpo $(DEPDIR)/blinkstick_tests-blinkstick_tests.Po
+#	$(AM_V_CC)source='blinkstick_tests.c' object='blinkstick_tests-blinkstick_tests.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(blinkstick_tests_CFLAGS) $(CFLAGS) -c -o blinkstick_tests-libblinkstick_test.o `test -f 'libblinkstick_test.c' || echo '$(srcdir)/'`libblinkstick_test.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(blinkstick_tests_CFLAGS) $(CFLAGS) -c -o blinkstick_tests-blinkstick_tests.o `test -f 'blinkstick_tests.c' || echo '$(srcdir)/'`blinkstick_tests.c
 
-blinkstick_tests-libblinkstick_test.obj: libblinkstick_test.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(blinkstick_tests_CFLAGS) $(CFLAGS) -MT blinkstick_tests-libblinkstick_test.obj -MD -MP -MF $(DEPDIR)/blinkstick_tests-libblinkstick_test.Tpo -c -o blinkstick_tests-libblinkstick_test.obj `if test -f 'libblinkstick_test.c'; then $(CYGPATH_W) 'libblinkstick_test.c'; else $(CYGPATH_W) '$(srcdir)/libblinkstick_test.c'; fi`
-	$(AM_V_at)$(am__mv) $(DEPDIR)/blinkstick_tests-libblinkstick_test.Tpo $(DEPDIR)/blinkstick_tests-libblinkstick_test.Po
-#	$(AM_V_CC)source='libblinkstick_test.c' object='blinkstick_tests-libblinkstick_test.obj' libtool=no \
+blinkstick_tests-blinkstick_tests.obj: blinkstick_tests.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(blinkstick_tests_CFLAGS) $(CFLAGS) -MT blinkstick_tests-blinkstick_tests.obj -MD -MP -MF $(DEPDIR)/blinkstick_tests-blinkstick_tests.Tpo -c -o blinkstick_tests-blinkstick_tests.obj `if test -f 'blinkstick_tests.c'; then $(CYGPATH_W) 'blinkstick_tests.c'; else $(CYGPATH_W) '$(srcdir)/blinkstick_tests.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/blinkstick_tests-blinkstick_tests.Tpo $(DEPDIR)/blinkstick_tests-blinkstick_tests.Po
+#	$(AM_V_CC)source='blinkstick_tests.c' object='blinkstick_tests-blinkstick_tests.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(blinkstick_tests_CFLAGS) $(CFLAGS) -c -o blinkstick_tests-libblinkstick_test.obj `if test -f 'libblinkstick_test.c'; then $(CYGPATH_W) 'libblinkstick_test.c'; else $(CYGPATH_W) '$(srcdir)/libblinkstick_test.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(blinkstick_tests_CFLAGS) $(CFLAGS) -c -o blinkstick_tests-blinkstick_tests.obj `if test -f 'blinkstick_tests.c'; then $(CYGPATH_W) 'blinkstick_tests.c'; else $(CYGPATH_W) '$(srcdir)/blinkstick_tests.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

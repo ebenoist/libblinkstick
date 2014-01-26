@@ -4,7 +4,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "rgb.h"
+struct rgb_color;
+typedef struct rgb_color rgb_color;
+
+struct rgb_color {
+  int red;
+  int green;
+  int blue;
+  unsigned char * bytes;
+};
+
+rgb_color* rgb_color_factory(int red, int green, int blue);
+unsigned char *rgb_to_char(rgb_color *color);
+void destroy_color(rgb_color *color);
 
 static int const BLINKSTICK_VENDOR_ID = 8352; //"0X20A0";
 static int const BLINKSTICK_PRODUCT_ID = 16869; //"0X41E5";

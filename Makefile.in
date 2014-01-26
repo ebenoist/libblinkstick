@@ -343,7 +343,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-SUBDIRS = src tests
+SUBDIRS = src tests example
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libblinkstick-$(API_VERSION).pc
 all: all-recursive

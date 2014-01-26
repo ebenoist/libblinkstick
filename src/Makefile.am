@@ -3,28 +3,10 @@ ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
 lib_LTLIBRARIES = lib@NAME@-@API_VERSION@.la
 
-## Define the source file list for the "libexample-@API_VERSION@.la"
-## target.  Note that @API_VERSION@ is not interpreted by Automake and
-## will therefore be treated as if it were literally part of the target name,
-## and the variable name derived from that.
-## The file extension .cc is recognized by Automake, and makes it produce
-## rules which invoke the C++ compiler to produce a libtool object file (.lo)
-## from each source file.  Note that it is not necessary to list header files
-## which are already listed elsewhere in a _HEADERS variable assignment.
 lib@NAME@_@API_VERSION@_la_SOURCES = libblinkstick.c rgb.c
-
-## Instruct libtool to include ABI version information in the generated shared
-## library file (.so).  The library ABI version is defined in configure.ac, so
-## that all version information is kept in one place.
 lib@NAME@_@API_VERSION@_la_LDFLAGS = -version-info $(SO_VERSION)
 lib@NAME@_@API_VERSION@_la_CFLAGS = $(LIBUSB_CFLAGS)
 lib@NAME@_@API_VERSION@_la_LIBADD = $(LIBUSB_LIBS)
-
-## Define the list of public header files and their install location.  The
-## nobase_ prefix instructs Automake to not strip the directory part from each
-## filename, in order to avoid the need to define separate file lists for each
-## installation directory.  This only works if the directory hierarchy in the
-## source tree matches the hierarchy at the install location, however.
 example_includedir = $(includedir)/
 nobase_example_include_HEADERS = libblinkstick.h
 

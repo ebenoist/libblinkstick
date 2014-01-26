@@ -492,8 +492,7 @@ top_builddir = ..
 top_srcdir = ..
 AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
-LD_ADD = ../src/lib@name@-0.1
-blinkstick_tests_SOURCES = minunit.h libblinkstick_test.c
+blinkstick_tests_SOURCES = libblinkstick_test.c
 blinkstick_tests_CFLAGS = -D_THREAD_SAFE -I/usr/local/Cellar/check/0.9.11/include 
 blinkstick_tests_LDADD = -L/usr/local/Cellar/check/0.9.11/lib -lcheck 
 all: all-am

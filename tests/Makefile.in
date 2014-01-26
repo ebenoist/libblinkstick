@@ -492,8 +492,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
-LD_ADD = ../src/lib@name@-@API_VERSION@
-blinkstick_tests_SOURCES = minunit.h libblinkstick_test.c
+blinkstick_tests_SOURCES = libblinkstick_test.c
 blinkstick_tests_CFLAGS = @CHECK_CFLAGS@
 blinkstick_tests_LDADD = @CHECK_LIBS@
 all: all-am

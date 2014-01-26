@@ -393,7 +393,7 @@ on `(hostname || uname -n) 2>/dev/null | sed 1q`
 "
 
 # Files that config.status was made for.
-config_files=" Makefile src/Makefile tests/Makefile libblinkstick-0.1.pc:libblinkstick.pc.in"
+config_files=" Makefile src/Makefile tests/Makefile example/Makefile libblinkstick-0.1.pc:libblinkstick.pc.in"
 config_commands=" depfiles libtool"
 
 ac_cs_usage="\
@@ -729,6 +729,7 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "tests/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
+    "example/Makefile") CONFIG_FILES="$CONFIG_FILES example/Makefile" ;;
     "libblinkstick-${API_VERSION}.pc") CONFIG_FILES="$CONFIG_FILES libblinkstick-${API_VERSION}.pc:libblinkstick.pc.in" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

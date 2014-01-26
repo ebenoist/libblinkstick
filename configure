@@ -12574,7 +12574,7 @@ fi
 
 # Override the template file name of the generated .pc file, so that there
 # is no need to rename the template file when the API version changes.
-ac_config_files="$ac_config_files Makefile src/Makefile tests/Makefile libblinkstick-${API_VERSION}.pc:libblinkstick.pc.in"
+ac_config_files="$ac_config_files Makefile src/Makefile tests/Makefile example/Makefile libblinkstick-${API_VERSION}.pc:libblinkstick.pc.in"
 
 
 cat >confcache <<\_ACEOF
@@ -13604,6 +13604,7 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "tests/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
+    "example/Makefile") CONFIG_FILES="$CONFIG_FILES example/Makefile" ;;
     "libblinkstick-${API_VERSION}.pc") CONFIG_FILES="$CONFIG_FILES libblinkstick-${API_VERSION}.pc:libblinkstick.pc.in" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

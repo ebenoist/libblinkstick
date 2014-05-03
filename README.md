@@ -12,9 +12,11 @@ A [blinkstick](http://www.blinkstick.com/) library in C with few dependencies.
 - ```script/test```
 
 ## To build the test app
-- Edit the make file to point at your install of libusb. *Note:* Will be replaced soon with a proper configure script.
 - ```script/build``` or ```script/build --disable-tests``` to disable the unit tests.
 - ```./target/blinkstick --color 255 0 0```
+
+## Installing the library
+This is a TODO. I will be including a pkg-config and cmake package for easy linking.
 
 ## Warning
 This is largely a work in progress. Expect nothing to work, things to change, etc...

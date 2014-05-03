@@ -5,17 +5,16 @@ A [blinkstick](http://www.blinkstick.com/) library in C with few dependencies.
 
 ## Requirements
 - libusb, ```brew install libusb``` on Mac OS X
-- Standard build tools (ie. make, gcc, etc...)
+- clang
+- cmake ```brew install cmake```
 
-## To build the test app 
+## Running tests
+- ```script/test```
+
+## To build the test app
 - Edit the make file to point at your install of libusb. *Note:* Will be replaced soon with a proper configure script.
-
-```
-LFLAGS = -L/usr/local/Cellar/libusb/1.0.9/lib/
-INCLUDES = -I/usr/local/include/libusb-1.0/
-```
-- ```make```
-- ```./blinkstick.app --color 255 0 0```
+- ```script/build``` or ```script/build --disable-tests``` to disable the unit tests.
+- ```./target/blinkstick --color 255 0 0```
 
 ## Warning
 This is largely a work in progress. Expect nothing to work, things to change, etc...
@@ -32,7 +31,7 @@ int main() {
 
   destroy_color(color);
   destroy_blinkstick(device);
-  
+
   return 0;
 }
 ```

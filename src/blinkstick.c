@@ -1,4 +1,4 @@
-#include <libblinkstick.h>
+#include "libblinkstick.h"
 #include <unistd.h>
 
 rgb_color* parse_args(char **flags) {

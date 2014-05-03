@@ -2,9 +2,15 @@
 
 bool print_debug = false;
 
-void debug(char * str) {
+void debug(const char *fmt, ...) {
   if (print_debug) {
-    printf("%s\n", str);
+    char buffer[256];
+    va_list ap;
+    va_start(ap, fmt);
+    vsprintf(buffer, fmt, ap);
+    va_end(ap);
+
+    puts(buffer);
   }
 }
 
@@ -58,7 +64,7 @@ blinkstick_device* find_blinkstick() {
   libusb_context *context = NULL;
 
   ssize_t device_count;
-  debug("Initializing USB context\n");
+  debug("Initializing USB context");
 
   libusb_init(&context);
   if (print_debug) {
@@ -66,6 +72,7 @@ blinkstick_device* find_blinkstick() {
   }
 
   device_count = libusb_get_device_list(context, &devices);
+  debug("Found %d usb devices.", device_count);
   libusb_device *blinkstick = NULL;
 
   for(int i = 0; i < device_count; i++) {
@@ -132,5 +139,4 @@ void destroy_color(rgb_color *color) {
   free(color->bytes);
   free(color);
 }
-
 

@@ -34,10 +34,10 @@ int main(int argc, char **argv) {
     set_color(color, device);
     sleep(2);
     off(device);
-  }
 
-  destroy_color(color);
-  destroy_blinkstick(device);
+    destroy_color(color);
+    destroy_blinkstick(device);
+  }
 
   return 0;
 }

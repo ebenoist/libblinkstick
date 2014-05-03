@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+echo "Make sure to install libusb"
+echo "$ brew install libusb"
+
+echo "Downloading gtest framework"
+curl https://googletest.googlecode.com/files/gtest-1.7.0.zip vendor/gtest-1.7.0.zip
+cd vendor && unzip gtest-1.7.0.zip

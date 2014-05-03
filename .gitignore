@@ -37,7 +37,9 @@ CMakeFiles
 Makefile
 cmake_install.cmake
 install_manifest.txt
+*.cmake
 
 # vendor
 vendor/*
+target/*
 

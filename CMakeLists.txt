@@ -22,9 +22,13 @@ endif(LIBUSB_FOUND)
 option(test "Build all tests." OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
 
-add_subdirectory(src)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../target)
 
+add_subdirectory(src)
 if (test)
   add_subdirectory(vendor/gtest-1.7.0)
   add_subdirectory(test)
 endif()
+
+
+

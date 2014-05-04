@@ -1,1 +1,1 @@
-cd build && make test
+sh ./script/build && ./target/unit_tests

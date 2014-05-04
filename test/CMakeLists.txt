@@ -1,8 +1,10 @@
-include_directories(${gtest_SOURCE_DIR}/include)
-set(test_sources blinkstick_tests.cc)
+include_directories(
+  ${COMMON_INCLUDES}
+)
+
+set(test_sources blinkstick_tests.c)
 
 add_executable(unit_tests ${test_sources})
-target_link_libraries(unit_tests gtest gtest_main)
-target_link_libraries(unit_tests libblinkstick)
+target_link_libraries(unit_tests libblinkstick seatest)
 
 add_test(unit-tests unit_tests)

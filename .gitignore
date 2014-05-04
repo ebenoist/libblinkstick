@@ -39,8 +39,11 @@ cmake_install.cmake
 install_manifest.txt
 *.cmake
 build/*
+!build/.gitkeep
 
 # vendor
 vendor/*
+!vendor/.gitkeep
 target/*
+!target/.gitkeep
 

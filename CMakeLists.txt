@@ -12,13 +12,6 @@ else(PKG_CONFIG_FOUND)
   message(FATAL_ERROR "Could not find PkgConfig")
 endif(PKG_CONFIG_FOUND)
 
-# Have we found libusb?
-if(LIBUSB_FOUND)
-  message(STATUS "libusb was found: ${LIBUSB_LIBRARIES}")
-else(LIBUSB_FOUND)
-  message(FATAL_ERROR "Could not find libusb.")
-endif(LIBUSB_FOUND)
-
 option(test "Build all tests." OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -std=c++0x -stdlib=libc++ -g3 -Wall -O0  -arch x86_64")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64 -arch x86_64")

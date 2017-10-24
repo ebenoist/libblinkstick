@@ -34,10 +34,10 @@ struct blinkstick_device {
 // PUBLIC
 void set_debug_true();
 blinkstick_device* find_blinkstick();
-// blinkstick_device** find_all();
-void set_color(rgb_color *color, blinkstick_device *device);
-void off(blinkstick_device *device);
+void set_color(int index, rgb_color *color, blinkstick_device *device);
+void off(int index, blinkstick_device *device);
 
 // PRIVATE
 void destroy_blinkstick(blinkstick_device *device);
-blinkstick_device* blinkstick_factory(libusb_device_handle *handle, libusb_context *context);
+blinkstick_device* blinkstick_factory(libusb_device_handle *handle,           \
+                                                      libusb_context *context);

@@ -20,7 +20,8 @@ void set_debug_true() {
 }
 
 int is_product_and_vendor_id(int vendor_id, int product_id) {
-  return ((vendor_id == BLINKSTICK_VENDOR_ID) && (product_id == BLINKSTICK_PRODUCT_ID));
+  return ((vendor_id == BLINKSTICK_VENDOR_ID) && (product_id ==               \
+                                                      BLINKSTICK_PRODUCT_ID));
 }
 
 int is_blinkstick(libusb_device *device) {
@@ -84,29 +85,42 @@ blinkstick_device* find_blinkstick() {
   }
 
   libusb_device_handle *dev_handle = claim_device(blinkstick);
+
   libusb_free_device_list(devices, 1);
 
   return blinkstick_factory(dev_handle, context);
 }
 
-void set_color(rgb_color *color, blinkstick_device *blinkstick) {
-  unsigned char *color_to_transfer = color->bytes;
-  libusb_control_transfer(blinkstick->handle, 0x20, 0x9, 0x1, 0x0000, color_to_transfer, COLOR_PACKET_SIZE, 2);
+void set_color(int index, rgb_color *color, blinkstick_device *blinkstick) {
+  unsigned char hex_index[1];
+  hex_index[0] = (index & 0xff);
+  unsigned char color_to_transfer[6] = {'\x05', '\x00', hex_index[0],         \
+                            color->bytes[0], color->bytes[1],color->bytes[2] };
+  libusb_control_transfer(blinkstick->handle, 0x20, 0x9, 0x0005, 0x0000,      \
+                                                      color_to_transfer, 6, 2);
 }
 
-void off(blinkstick_device *blinkstick) {
+void set_mode(int mode, blinkstick_device *blinkstick) {
+  unsigned char mode_index[2] = {'\x04','\x02'};
+  libusb_control_transfer(blinkstick->handle, 0x20, 0x9, 0x0004, 0,           \
+                                                            mode_index, 2, 2);
+}
+
+void off(int index, blinkstick_device *blinkstick) {
   rgb_color *off = rgb_color_factory(0,0,0);
-  set_color(off, blinkstick);
+  set_color(index, off, blinkstick);
   destroy_color(off);
 }
 
 void destroy_blinkstick(blinkstick_device *device) {
+  debug("Destroy");
   libusb_close(device->handle);
   libusb_exit(device->usb_context);
   free(device);
 }
 
-blinkstick_device* blinkstick_factory(libusb_device_handle *handle, libusb_context *context) {
+blinkstick_device* blinkstick_factory(libusb_device_handle *handle,           \
+                                                    libusb_context *context) {
   blinkstick_device *device = malloc(sizeof(blinkstick_factory));
   device->handle = handle;
   device->usb_context = context;
@@ -126,11 +140,10 @@ rgb_color* rgb_color_factory(int red, int green, int blue) {
 }
 
 unsigned char * rgb_to_char(rgb_color *color) {
-  unsigned char* bytes = malloc(sizeof(unsigned char[4]));
-  bytes[0] = '\x01';
-  bytes[1] = (color->red & 0xff);
-  bytes[2] = (color->green & 0xff);
-  bytes[3] = (color->blue & 0xff);
+  unsigned char* bytes = malloc(sizeof(unsigned char[3]));
+  bytes[0] = (color->red & 0xff);
+  bytes[1] = (color->green & 0xff);
+  bytes[2] = (color->blue & 0xff);
 
   return bytes;
 }
@@ -139,4 +152,3 @@ void destroy_color(rgb_color *color) {
   free(color->bytes);
   free(color);
 }
-

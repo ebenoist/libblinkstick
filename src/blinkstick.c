@@ -30,15 +30,19 @@ int main(int argc, char **argv) {
   rgb_color *color = parse_args(argv);
   blinkstick_device *device = find_blinkstick();
 
-  if (device) {
-    set_color(color, device);
-    sleep(2);
-    off(device);
+  int i;
 
+  if (device) {
+    for(i = 0; i < 8; i++)
+    {
+      set_color(i, color, device);
+      usleep(1000);
+      off(i, device);
+      usleep(10000);
+    }
     destroy_color(color);
     destroy_blinkstick(device);
   }
 
   return 0;
 }
-

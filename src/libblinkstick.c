@@ -97,7 +97,7 @@ void set_color(int index, rgb_color *color, blinkstick_device *blinkstick) {
   unsigned char color_to_transfer[6] = {'\x05', '\x00', hex_index[0],         \
                             color->bytes[0], color->bytes[1],color->bytes[2] };
   libusb_control_transfer(blinkstick->handle, 0x20, 0x9, 0x0005, 0x0000,      \
-                                                      color_to_transfer, 6, 2);
+                                      color_to_transfer, COLOR_PACKET_SIZE, 2);
 }
 
 void set_mode(int mode, blinkstick_device *blinkstick) {

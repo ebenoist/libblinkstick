@@ -60,9 +60,11 @@ libusb_device_handle* claim_device(libusb_device* device) {
   return dev_handle;
 }
 
-blinkstick_device* find_blinkstick() {
+void find_blinkstick(blinkstick_device_list *list_of_devices) {
   libusb_device **devices;
   libusb_context *context = NULL;
+  int blinkstick_device_count = 0;
+  unsigned char *serial_number = malloc(sizeof(unsigned char[9]));
 
   ssize_t device_count;
   debug("Initializing USB context");
@@ -80,15 +82,18 @@ blinkstick_device* find_blinkstick() {
     libusb_device *device = devices[i];
 
     if(is_blinkstick(device)) {
-      blinkstick = device;
+      if(blinkstick_device_count >= list_of_devices->num_of_devices)
+      {
+        break;
+      }
+      libusb_device_handle *dev_handle = claim_device(device);
+      libusb_get_string_descriptor_ascii(dev_handle, 3, serial_number, 9);
+      debug("Found blinkstick device with serial number %s", serial_number);
+      list_of_devices->blinkstick_device_list[blinkstick_device_count++] =    \
+                        blinkstick_factory(dev_handle, context, serial_number);
     }
   }
-
-  libusb_device_handle *dev_handle = claim_device(blinkstick);
-
   libusb_free_device_list(devices, 1);
-
-  return blinkstick_factory(dev_handle, context);
 }
 
 void set_color(int index, rgb_color *color, blinkstick_device *blinkstick) {
@@ -112,19 +117,34 @@ void off(int index, blinkstick_device *blinkstick) {
   destroy_color(off);
 }
 
-void destroy_blinkstick(blinkstick_device *device) {
+void destroy_blinkstick(blinkstick_device_list *device_list) {
   debug("Destroy");
-  libusb_close(device->handle);
-  libusb_exit(device->usb_context);
-  free(device);
+  int i = 0;
+  for(i = 0; i < device_list->num_of_devices; i++) {
+    if(device_list->blinkstick_device_list[i] != NULL) {
+      libusb_close(device_list->blinkstick_device_list[i]->handle);
+      libusb_exit(device_list->blinkstick_device_list[0]->usb_context);
+      free(device_list->blinkstick_device_list[i]);
+    }
+  }
+  free(device_list);
 }
 
 blinkstick_device* blinkstick_factory(libusb_device_handle *handle,           \
-                                                    libusb_context *context) {
+                       libusb_context *context, unsigned char *serial_number) {
   blinkstick_device *device = malloc(sizeof(blinkstick_factory));
   device->handle = handle;
   device->usb_context = context;
+  device->serial_number = serial_number;
   return device;
+}
+
+blinkstick_device_list* blinkstick_list_factory(int number_of_devices) {
+  blinkstick_device_list *device_list = malloc(sizeof(blinkstick_device_list));
+  device_list->num_of_devices = number_of_devices;
+  device_list->blinkstick_device_list = malloc(number_of_devices *            \
+                                                    sizeof(blinkstick_device));
+  return device_list;
 }
 
 // RGB

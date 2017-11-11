@@ -4,15 +4,15 @@ libBlinkStick
 A [blinkstick](http://www.blinkstick.com/) library in C with few dependencies.
 
 ## Requirements
-- libusb, ```brew install libusb``` on Mac OS X
+- libusb, ```brew install hidapi``` on Mac OS X
 - clang
 - cmake ```brew install cmake```
 
 ## Running tests
-- ```script/test```
+- `make run_test`
 
 ## To build the test app
-- ```script/build``` or ```script/build --disable-tests``` to disable the unit tests.
+- make
 - ```./target/blinkstick --color 255 0 0```
 
 ## Installing the library

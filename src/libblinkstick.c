@@ -2,7 +2,7 @@
 
 bool print_debug = false;
 
-void debug(const char *fmt, ...) {
+void debug(const char* fmt, ...) {
   if (print_debug) {
     char buffer[256];
     va_list ap;
@@ -19,117 +19,63 @@ void set_debug_true() {
   debug("STARTING LIBBLINKSTICK WITH DEBUG LOGGING");
 }
 
-int is_product_and_vendor_id(int vendor_id, int product_id) {
-  return ((vendor_id == BLINKSTICK_VENDOR_ID) && (product_id ==               \
-                                                      BLINKSTICK_PRODUCT_ID));
-}
-
-int is_blinkstick(libusb_device *device) {
-  struct libusb_device_descriptor desc;
-  int result = libusb_get_device_descriptor(device, &desc);
-
-  if (result >= 0) {
-    if (is_product_and_vendor_id(desc.idVendor, desc.idProduct)) {
-      debug("Found the blinkstick\n");
-
-      return true; // Will only find the first. TODO: find more.
-    }
-  }
-
-  return false;
-}
-
-libusb_device_handle* claim_device(libusb_device* device) {
-  if (device == NULL) {
-    debug("No device to claim\n");
-    return NULL;
-  }
-
-  libusb_device_handle *dev_handle = NULL;
-  int open_device_result;
-
-  open_device_result = libusb_open(device, &dev_handle);
-
-  if (open_device_result >= 0) {
-    libusb_claim_interface(dev_handle, 0);
-    libusb_ref_device(device);
-  } else {
-    debug("Failed at claiming device\n");
-  }
-
-  return dev_handle;
-}
-
-blinkstick_device* find_blinkstick() {
-  libusb_device **devices;
-  libusb_context *context = NULL;
-
-  ssize_t device_count;
+blinkstick_device** find_blinksticks(int count) {
   debug("Initializing USB context");
+  blinkstick_device** devices = malloc(sizeof(blinkstick_device*) * count);
 
-  libusb_init(&context);
-  if (print_debug) {
-    libusb_set_debug(context, 3);
+  int res;
+  res = hid_init();
+
+  if (res != 0) {
+    debug("failed to initialize hid");
   }
 
-  device_count = libusb_get_device_list(context, &devices);
-  debug("Found %d usb devices.", device_count);
-  libusb_device *blinkstick = NULL;
+  struct hid_device_info* device_info;
+  device_info = hid_enumerate(BLINKSTICK_VENDOR_ID, BLINKSTICK_PRODUCT_ID);
+  devices[0] = blinkstick_factory(hid_open_path(device_info->path));
 
-  for(int i = 0; i < device_count; i++) {
-    libusb_device *device = devices[i];
-
-    if(is_blinkstick(device)) {
-      blinkstick = device;
-    }
+  int num = 1;
+  while ((device_info = device_info->next)) {
+    devices[num] = blinkstick_factory(hid_open_path(device_info->path));
+    num++;
   }
 
-  libusb_device_handle *dev_handle = claim_device(blinkstick);
-
-  libusb_free_device_list(devices, 1);
-
-  return blinkstick_factory(dev_handle, context);
+  return devices;
 }
 
-void set_color(int index, rgb_color *color, blinkstick_device *blinkstick) {
-  unsigned char hex_index[1];
-  hex_index[0] = (index & 0xff);
-  unsigned char color_to_transfer[6] = {'\x05', '\x00', hex_index[0],         \
-                            color->bytes[0], color->bytes[1],color->bytes[2] };
-  libusb_control_transfer(blinkstick->handle, 0x20, 0x9, 0x0005, 0x0000,      \
-                                      color_to_transfer, COLOR_PACKET_SIZE, 2);
+void set_color(int index, rgb_color* color, blinkstick_device* blinkstick) {
+  if (index == 0) {
+    unsigned char out[4] = {0x1, color->bytes[0], color->bytes[1],
+                            color->bytes[2]};
+    hid_write(blinkstick->handle, out, sizeof(out));
+
+  } else {
+    unsigned char out[6] = {
+        0x0005, 0x05, index, color->bytes[0], color->bytes[1], color->bytes[2]};
+    hid_write(blinkstick->handle, out, sizeof(out));
+  }
 }
 
-void set_mode(int mode, blinkstick_device *blinkstick) {
-  unsigned char mode_index[2] = {'\x04','\x02'};
-  libusb_control_transfer(blinkstick->handle, 0x20, 0x9, 0x0004, 0,           \
-                                                            mode_index, 2, 2);
-}
-
-void off(int index, blinkstick_device *blinkstick) {
-  rgb_color *off = rgb_color_factory(0,0,0);
+void off(int index, blinkstick_device* blinkstick) {
+  rgb_color* off = rgb_color_factory(0, 0, 0);
   set_color(index, off, blinkstick);
   destroy_color(off);
 }
 
-void destroy_blinkstick(blinkstick_device *device) {
-  debug("Destroy");
-  libusb_close(device->handle);
-  libusb_exit(device->usb_context);
+void destroy_blinkstick(blinkstick_device* device) {
+  hid_close(device->handle);
   free(device);
 }
 
-blinkstick_device* blinkstick_factory(libusb_device_handle *handle,           \
-                                                    libusb_context *context) {
-  blinkstick_device *device = malloc(sizeof(blinkstick_factory));
+blinkstick_device* blinkstick_factory(hid_device* handle) {
+  blinkstick_device* device = malloc(sizeof(blinkstick_device));
   device->handle = handle;
-  device->usb_context = context;
   return device;
 }
 
 // RGB
 rgb_color* rgb_color_factory(int red, int green, int blue) {
-  rgb_color *color = malloc(sizeof(rgb_color));
+  rgb_color* color = malloc(sizeof(rgb_color));
 
   color->red = red;
   color->green = green;
@@ -139,7 +85,7 @@ rgb_color* rgb_color_factory(int red, int green, int blue) {
   return color;
 }
 
-unsigned char * rgb_to_char(rgb_color *color) {
+unsigned char* rgb_to_char(rgb_color* color) {
   unsigned char* bytes = malloc(sizeof(unsigned char[3]));
   bytes[0] = (color->red & 0xff);
   bytes[1] = (color->green & 0xff);
@@ -148,7 +94,7 @@ unsigned char * rgb_to_char(rgb_color *color) {
   return bytes;
 }
 
-void destroy_color(rgb_color *color) {
+void destroy_color(rgb_color* color) {
   free(color->bytes);
   free(color);
 }

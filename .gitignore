@@ -41,7 +41,8 @@ install_manifest.txt
 build/*
 !build/.gitkeep
 
-# vendor
 target/*
 !target/.gitkeep
-
+.clang
+.clang_complete
+.tags

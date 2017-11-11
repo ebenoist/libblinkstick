@@ -3,6 +3,8 @@ libBlinkStick
 
 A [blinkstick](http://www.blinkstick.com/) library in C with few dependencies.
 
+## [API Documentation](http://ebenoist.github.io/libblinkstick/html/libblinkstick_8h.html)
+
 ## Requirements
 - [hidapi](https://github.com/signal11/hidapi)
 - [clang](https://clang.llvm.org/)

@@ -46,3 +46,4 @@ target/*
 .clang
 .clang_complete
 .tags
+*.gch

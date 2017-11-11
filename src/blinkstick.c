@@ -1,6 +1,15 @@
 #include <unistd.h>
 #include "libblinkstick.h"
 
+typedef struct arguments arguments;
+struct arguments;
+
+struct arguments {
+  rgb_color* color;
+  int count;
+  int index;
+};
+
 struct arguments* parse_args(char** flags) {
   struct arguments* args = malloc(sizeof(arguments));
 
@@ -10,6 +19,10 @@ struct arguments* parse_args(char** flags) {
         args->count = atoi(*(flags + i + 1));
       }
 
+      if (strcmp(flags[i], "--index") == 0) {
+        args->index = atoi(*(flags + i + 1));
+      }
+
       if (strcmp(flags[i], "--debug") == 0) {
         set_debug_true();
       }
@@ -17,7 +30,6 @@ struct arguments* parse_args(char** flags) {
       if (strcmp(flags[i], "--color") == 0) {
         char *red, *green, *blue;
 
-        // sloppy
         red = *(flags + i + 1);
         green = *(flags + i + 2);
         blue = *(flags + i + 3);
@@ -34,15 +46,8 @@ int main(int argc, char** argv) {
   struct arguments* args = parse_args(argv);
   blinkstick_device** devices = find_blinksticks(args->count);
 
-  int j;
-  for (j = 0; j < args->count; j++) {
-    int i;
-    for (i = 0; i < 8; i++) {
-      set_color(i, args->color, devices[j]);
-      usleep(10000);
-      off(i, devices[j]);
-      usleep(10000);
-    }
+  for (int j = 0; j < args->count; j++) {
+    set_color(args->index, args->color, devices[j]);
     destroy_blinkstick(devices[j]);
   }
 

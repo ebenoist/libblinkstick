@@ -20,40 +20,67 @@ void set_debug_true() {
 }
 
 blinkstick_device** find_blinksticks(int count) {
-  debug("Initializing USB context");
   blinkstick_device** devices = malloc(sizeof(blinkstick_device*) * count);
 
-  int res;
-  res = hid_init();
-
+  debug("initializing usb context");
+  int res = hid_init();
   if (res != 0) {
     debug("failed to initialize hid");
+    exit(1);
   }
 
   struct hid_device_info* device_info;
   device_info = hid_enumerate(BLINKSTICK_VENDOR_ID, BLINKSTICK_PRODUCT_ID);
   devices[0] = blinkstick_factory(hid_open_path(device_info->path));
+  debug("found device: %s", device_info->path);
 
   int num = 1;
   while ((device_info = device_info->next)) {
     devices[num] = blinkstick_factory(hid_open_path(device_info->path));
+    debug("found device: %s", device_info->path);
     num++;
+  }
+
+  if (count != num) {
+    printf("did not find the number of devices wanted: %d, but found %d\n",
+           count, num);
+    exit(1);
   }
 
   return devices;
 }
 
-void set_color(int index, rgb_color* color, blinkstick_device* blinkstick) {
+unsigned char* build_control_message(int index, rgb_color* color) {
+  // Write to the first LED present
+  // this will be the _only_ led for the original blinkstick
   if (index == 0) {
-    unsigned char out[4] = {0x1, color->bytes[0], color->bytes[1],
-                            color->bytes[2]};
-    hid_write(blinkstick->handle, out, sizeof(out));
-
-  } else {
-    unsigned char out[6] = {
-        0x0005, 0x05, index, color->bytes[0], color->bytes[1], color->bytes[2]};
-    hid_write(blinkstick->handle, out, sizeof(out));
+    unsigned char* msg = malloc(sizeof(unsigned char) * SINGLE_LED_MSG_SIZE);
+    msg[0] = 0x1;
+    msg[1] = color->bytes[0];
+    msg[2] = color->bytes[1];
+    msg[3] = color->bytes[2];
+    return msg;
   }
+
+  // Writing to the other LEDs requires a different payload
+  // this changes the write mode (first two bytes) and then
+  // assigns the index.
+  unsigned char* msg =
+      malloc(sizeof(unsigned char) * INDEXED_LED_MSG_PACKET_SIZE);
+  msg[0] = 0x0005;
+  msg[1] = 0x05;
+  msg[2] = index;
+  msg[3] = color->bytes[0];
+  msg[4] = color->bytes[1];
+  msg[5] = color->bytes[2];
+
+  return msg;
+}
+
+void set_color(int index, rgb_color* color, blinkstick_device* blinkstick) {
+  unsigned char* msg = build_control_message(index, color);
+  hid_write(blinkstick->handle, msg, sizeof(msg));
+  free(msg);
 }
 
 void off(int index, blinkstick_device* blinkstick) {
@@ -73,7 +100,7 @@ blinkstick_device* blinkstick_factory(hid_device* handle) {
   return device;
 }
 
-// RGB
+// RGB functions
 rgb_color* rgb_color_factory(int red, int green, int blue) {
   rgb_color* color = malloc(sizeof(rgb_color));
 

@@ -1,0 +1,127 @@
+\hypertarget{libblinkstick_8h}{}\section{src/libblinkstick.h File Reference}
+\label{libblinkstick_8h}\index{src/libblinkstick.\+h@{src/libblinkstick.\+h}}
+
+
+Header for lib\+Blink\+Stick.  
+
+
+{\ttfamily \#include $<$hidapi/hidapi.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdarg.\+h$>$}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structrgb__color}{rgb\+\_\+color}
+\item 
+struct \hyperlink{structblinkstick__device}{blinkstick\+\_\+device}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structrgb__color}{rgb\+\_\+color} \hyperlink{libblinkstick_8h_ae896ecd1dd738420085f665fa59fbbae}{rgb\+\_\+color}
+\item 
+typedef struct \hyperlink{structblinkstick__device}{blinkstick\+\_\+device} \hyperlink{libblinkstick_8h_afec7f37c4f6d0909ebdd025c714397a8}{blinkstick\+\_\+device}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structrgb__color}{rgb\+\_\+color} $\ast$ \hyperlink{libblinkstick_8h_a5b5175816d11b9ad7d0f9ab2691e82f9}{rgb\+\_\+color\+\_\+factory} (int red, int green, int blue)
+\item 
+void \hyperlink{libblinkstick_8h_ad3ac62dcc463daa8eedf758d77f2d271}{destroy\+\_\+color} (\hyperlink{structrgb__color}{rgb\+\_\+color} $\ast$color)
+\item 
+\mbox{\Hypertarget{libblinkstick_8h_af9c51713718d72dc7ff5107b54fe0df1}\label{libblinkstick_8h_af9c51713718d72dc7ff5107b54fe0df1}} 
+unsigned char $\ast$ {\bfseries rgb\+\_\+to\+\_\+char} (\hyperlink{structrgb__color}{rgb\+\_\+color} $\ast$color)
+\item 
+\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$$\ast$ \hyperlink{libblinkstick_8h_a5e00314b2adbb5f59044674cf5e40f20}{find\+\_\+blinksticks} (int count)
+\item 
+\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$ \hyperlink{libblinkstick_8h_a64a2f1f9d21f00a9f108889b877184c2}{find\+\_\+blinkstick} ()
+\item 
+void \hyperlink{libblinkstick_8h_a67f8f706ab5b7d5f52cd3261622fec0b}{set\+\_\+color} (int index, \hyperlink{structrgb__color}{rgb\+\_\+color} $\ast$color, \hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$device)
+\item 
+void \hyperlink{libblinkstick_8h_af321abd0147c11c49b6f6e8382700c19}{off} (int index, \hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$device)
+\item 
+\mbox{\Hypertarget{libblinkstick_8h_aab8cc905347bb3168a41d56beb7fe13e}\label{libblinkstick_8h_aab8cc905347bb3168a41d56beb7fe13e}} 
+void {\bfseries set\+\_\+debug\+\_\+true} ()
+\item 
+void \hyperlink{libblinkstick_8h_af93cc54a748d820582041f977edc6404}{destroy\+\_\+blinkstick} (\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$device)
+\item 
+\mbox{\Hypertarget{libblinkstick_8h_acc13ce19e9a9af71241ecbd0ec318e68}\label{libblinkstick_8h_acc13ce19e9a9af71241ecbd0ec318e68}} 
+\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$ {\bfseries blinkstick\+\_\+factory} (hid\+\_\+device $\ast$handle)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Header for lib\+Blink\+Stick. 
+
+lib\+Blink\+Stick is meant to to be a simple library for talking to a blinkstick Both the blinkstick square and blinkstick v1.\+1 are officially supported and it\textquotesingle{}s likely that other devices work as well.
+
+lib\+Blink\+Stick depends on hidapi for interacting with the U\+SB devices, but otherwise has no other dependencies.
+
+Included are functions to turn on and off any of the L\+E\+Ds and change their color via an \hyperlink{structrgb__color}{rgb\+\_\+color} struct. Multiple devices are supported. 
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{libblinkstick_8h_afec7f37c4f6d0909ebdd025c714397a8}\label{libblinkstick_8h_afec7f37c4f6d0909ebdd025c714397a8}} 
+\index{libblinkstick.\+h@{libblinkstick.\+h}!blinkstick\+\_\+device@{blinkstick\+\_\+device}}
+\index{blinkstick\+\_\+device@{blinkstick\+\_\+device}!libblinkstick.\+h@{libblinkstick.\+h}}
+\subsubsection{\texorpdfstring{blinkstick\+\_\+device}{blinkstick\_device}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structblinkstick__device}{blinkstick\+\_\+device}  \hyperlink{structblinkstick__device}{blinkstick\+\_\+device}}
+
+A \hyperlink{structblinkstick__device}{blinkstick\+\_\+device} holds a pointer to the hid device and is used when setting colors, modes, or turning the device off. Construct this device by using find\+\_\+blinksticks and free it with destroy\+\_\+blinkstick \mbox{\Hypertarget{libblinkstick_8h_ae896ecd1dd738420085f665fa59fbbae}\label{libblinkstick_8h_ae896ecd1dd738420085f665fa59fbbae}} 
+\index{libblinkstick.\+h@{libblinkstick.\+h}!rgb\+\_\+color@{rgb\+\_\+color}}
+\index{rgb\+\_\+color@{rgb\+\_\+color}!libblinkstick.\+h@{libblinkstick.\+h}}
+\subsubsection{\texorpdfstring{rgb\+\_\+color}{rgb\_color}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structrgb__color}{rgb\+\_\+color}  \hyperlink{structrgb__color}{rgb\+\_\+color}}
+
+Represents an rgb color
+
+Constructed of 3 colors, each with a max value of 255 and a byte represenation of the rgb value for sending directly to the \hyperlink{structblinkstick__device}{blinkstick\+\_\+device} 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{libblinkstick_8h_af93cc54a748d820582041f977edc6404}\label{libblinkstick_8h_af93cc54a748d820582041f977edc6404}} 
+\index{libblinkstick.\+h@{libblinkstick.\+h}!destroy\+\_\+blinkstick@{destroy\+\_\+blinkstick}}
+\index{destroy\+\_\+blinkstick@{destroy\+\_\+blinkstick}!libblinkstick.\+h@{libblinkstick.\+h}}
+\subsubsection{\texorpdfstring{destroy\+\_\+blinkstick()}{destroy\_blinkstick()}}
+{\footnotesize\ttfamily void destroy\+\_\+blinkstick (\begin{DoxyParamCaption}\item[{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$}]{device }\end{DoxyParamCaption})}
+
+Frees the given blinkstick device \mbox{\Hypertarget{libblinkstick_8h_ad3ac62dcc463daa8eedf758d77f2d271}\label{libblinkstick_8h_ad3ac62dcc463daa8eedf758d77f2d271}} 
+\index{libblinkstick.\+h@{libblinkstick.\+h}!destroy\+\_\+color@{destroy\+\_\+color}}
+\index{destroy\+\_\+color@{destroy\+\_\+color}!libblinkstick.\+h@{libblinkstick.\+h}}
+\subsubsection{\texorpdfstring{destroy\+\_\+color()}{destroy\_color()}}
+{\footnotesize\ttfamily void destroy\+\_\+color (\begin{DoxyParamCaption}\item[{\hyperlink{structrgb__color}{rgb\+\_\+color} $\ast$}]{color }\end{DoxyParamCaption})}
+
+Frees an rgb struct and its byte represenation \mbox{\Hypertarget{libblinkstick_8h_a64a2f1f9d21f00a9f108889b877184c2}\label{libblinkstick_8h_a64a2f1f9d21f00a9f108889b877184c2}} 
+\index{libblinkstick.\+h@{libblinkstick.\+h}!find\+\_\+blinkstick@{find\+\_\+blinkstick}}
+\index{find\+\_\+blinkstick@{find\+\_\+blinkstick}!libblinkstick.\+h@{libblinkstick.\+h}}
+\subsubsection{\texorpdfstring{find\+\_\+blinkstick()}{find\_blinkstick()}}
+{\footnotesize\ttfamily \hyperlink{structblinkstick__device}{blinkstick\+\_\+device}$\ast$ find\+\_\+blinkstick (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Find the first blinkstick device on the bus registered with H\+ID. \mbox{\Hypertarget{libblinkstick_8h_a5e00314b2adbb5f59044674cf5e40f20}\label{libblinkstick_8h_a5e00314b2adbb5f59044674cf5e40f20}} 
+\index{libblinkstick.\+h@{libblinkstick.\+h}!find\+\_\+blinksticks@{find\+\_\+blinksticks}}
+\index{find\+\_\+blinksticks@{find\+\_\+blinksticks}!libblinkstick.\+h@{libblinkstick.\+h}}
+\subsubsection{\texorpdfstring{find\+\_\+blinksticks()}{find\_blinksticks()}}
+{\footnotesize\ttfamily \hyperlink{structblinkstick__device}{blinkstick\+\_\+device}$\ast$$\ast$ find\+\_\+blinksticks (\begin{DoxyParamCaption}\item[{int}]{count }\end{DoxyParamCaption})}
+
+Given a count will return a pointer array of blinkstick devices. \mbox{\Hypertarget{libblinkstick_8h_af321abd0147c11c49b6f6e8382700c19}\label{libblinkstick_8h_af321abd0147c11c49b6f6e8382700c19}} 
+\index{libblinkstick.\+h@{libblinkstick.\+h}!off@{off}}
+\index{off@{off}!libblinkstick.\+h@{libblinkstick.\+h}}
+\subsubsection{\texorpdfstring{off()}{off()}}
+{\footnotesize\ttfamily void off (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$}]{device }\end{DoxyParamCaption})}
+
+Turns off the led at the specified index for the provided device.
+
+This is the same as using set\+\_\+color with the R\+GB value (0, 0, 0) \mbox{\Hypertarget{libblinkstick_8h_a5b5175816d11b9ad7d0f9ab2691e82f9}\label{libblinkstick_8h_a5b5175816d11b9ad7d0f9ab2691e82f9}} 
+\index{libblinkstick.\+h@{libblinkstick.\+h}!rgb\+\_\+color\+\_\+factory@{rgb\+\_\+color\+\_\+factory}}
+\index{rgb\+\_\+color\+\_\+factory@{rgb\+\_\+color\+\_\+factory}!libblinkstick.\+h@{libblinkstick.\+h}}
+\subsubsection{\texorpdfstring{rgb\+\_\+color\+\_\+factory()}{rgb\_color\_factory()}}
+{\footnotesize\ttfamily \hyperlink{structrgb__color}{rgb\+\_\+color}$\ast$ rgb\+\_\+color\+\_\+factory (\begin{DoxyParamCaption}\item[{int}]{red,  }\item[{int}]{green,  }\item[{int}]{blue }\end{DoxyParamCaption})}
+
+Builds an \hyperlink{structrgb__color}{rgb\+\_\+color} struct, this will malloc a new struct and return a pointer. Ensure that you release it using destroy\+\_\+color. \mbox{\Hypertarget{libblinkstick_8h_a67f8f706ab5b7d5f52cd3261622fec0b}\label{libblinkstick_8h_a67f8f706ab5b7d5f52cd3261622fec0b}} 
+\index{libblinkstick.\+h@{libblinkstick.\+h}!set\+\_\+color@{set\+\_\+color}}
+\index{set\+\_\+color@{set\+\_\+color}!libblinkstick.\+h@{libblinkstick.\+h}}
+\subsubsection{\texorpdfstring{set\+\_\+color()}{set\_color()}}
+{\footnotesize\ttfamily void set\+\_\+color (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{\hyperlink{structrgb__color}{rgb\+\_\+color} $\ast$}]{color,  }\item[{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$}]{device }\end{DoxyParamCaption})}
+
+Sets the L\+ED at the given index to the specified color for the provided device 

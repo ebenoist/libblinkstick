@@ -6,6 +6,21 @@
 #include <stdarg.h>
 
 /**
+ * @file libblinkstick.h
+ * @brief Header for libBlinkStick
+ *
+ * libBlinkStick is meant to to be a simple library for talking to a blinkstick
+ * Both the blinkstick square and blinkstick v1.1 are officially supported and
+ * it's likely that other devices work as well.
+ *
+ * libBlinkStick depends on hidapi for interacting with the USB devices, but
+ * otherwise has no other dependencies.
+ *
+ * Included are functions to turn on and off any of the LEDs and change their
+ * color via an rgb_color struct. Multiple devices are supported.
+ */
+
+/**
  * Represents an rgb color
  *
  * Constructed of 3 colors, each with a max value

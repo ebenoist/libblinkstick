@@ -4,36 +4,18 @@ libBlinkStick
 A [blinkstick](http://www.blinkstick.com/) library in C with few dependencies.
 
 ## Requirements
-- libusb, ```brew install hidapi``` on Mac OS X
-- clang
-- cmake ```brew install cmake```
+- [hidapi](https://github.com/signal11/hidapi)
+- [clang](https://clang.llvm.org/)
+- [cmake](https://cmake.org/)
+
+## Getting Started
+- `cmake .` to generate the Makefiles for your system
+- `make` to build the library and CLI tool
 
 ## Running tests
 - `make run_test`
 
-## To build the test app
-- make
-- ```./target/blinkstick --color 255 0 0```
+## The CLI tool
+Mostly a proof of concept for the library, the blinkstick CLI allows you to turn on and off any number of connected devices, set their colors, or target specific LEDs.
 
-## Installing the library
-This is a TODO. I will be including a pkg-config and cmake package for easy linking.
-
-## Warning
-This is largely a work in progress. Expect nothing to work, things to change, etc...
-
-## Example
-
-```C
-#include <libblinkstick.h>
-
-int main() {
-  blinkstick_device *device = find_blinkstick();
-  rgb_color *red = rgb_color_factory(255,0,0);
-  set_color(color, device);
-
-  destroy_color(color);
-  destroy_blinkstick(device);
-
-  return 0;
-}
-```
+After running make, you'll have a `blinkstick` binary in target/

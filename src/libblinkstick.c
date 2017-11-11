@@ -50,6 +50,10 @@ blinkstick_device** find_blinksticks(int count) {
   return devices;
 }
 
+blinkstick_device* find_blinkstick() {
+  return find_blinksticks(1)[0];
+}
+
 unsigned char* build_control_message(int index, rgb_color* color) {
   // Write to the first LED present
   // this will be the _only_ led for the original blinkstick

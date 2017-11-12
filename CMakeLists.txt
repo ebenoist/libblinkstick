@@ -35,7 +35,7 @@ set(INSTALL_INC_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "Installation d
 set(INSTALL_MAN_DIR "${CMAKE_INSTALL_PREFIX}/share/man" CACHE PATH "Installation directory for manual pages")
 set(INSTALL_PKGCONFIG_DIR "${CMAKE_INSTALL_PREFIX}/share/pkgconfig" CACHE PATH "Installation directory for pkgconfig (.pc) files")
 
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/libblinkstick.pc.cmakein
+configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/libblinkstick.pc.in
 		${CMAKE_CURRENT_BINARY_DIR}/libblinkstick.pc @ONLY)
 
 install(FILES libblinkstick.pc DESTINATION "${INSTALL_PKGCONFIG_DIR}")

@@ -17,34 +17,8 @@
  * otherwise has no other dependencies.
  *
  * Included are functions to turn on and off any of the LEDs and change their
- * color via an rgb_color struct. Multiple devices are supported.
+ * color via an rgb color. Multiple devices are supported.
  */
-
-/**
- * Represents an rgb color
- *
- * Constructed of 3 colors, each with a max value
- * of 255 and a byte represenation of the rgb value
- * for sending directly to the blinkstick_device
- */
-typedef struct blinkstick_color {
-  int red;
-  int green;
-  int blue;
-  unsigned char* bytes;
-} blinkstick_color;
-
-/**
- * Builds an blinkstick_color struct, this will malloc a new struct
- * and return a pointer. Ensure that you release it using
- * destroy_blinkstick_color.
- */
-// blinkstick_color* blinkstick_color_factory(int red, int green, int blue);
-
-/**
- * Frees an rgb struct and its byte represenation
- */
-// void blinkstick_destroy_color(blinkstick_color* color);
 
 static int const BLINKSTICK_VENDOR_ID = 8352;    //"0X20A0";
 static int const BLINKSTICK_PRODUCT_ID = 16869;  //"0X41E5";

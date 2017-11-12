@@ -14,14 +14,10 @@ Header for lib\+Blink\+Stick.
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{structblinkstick__color}{blinkstick\+\_\+color}
-\item 
 struct \hyperlink{structblinkstick__device}{blinkstick\+\_\+device}
 \end{DoxyCompactItemize}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
-\item 
-typedef struct \hyperlink{structblinkstick__color}{blinkstick\+\_\+color} \hyperlink{libblinkstick_8h_a6431cb52c259f80dc1931e529bf89b74}{blinkstick\+\_\+color}
 \item 
 typedef struct \hyperlink{structblinkstick__device}{blinkstick\+\_\+device} \hyperlink{libblinkstick_8h_afec7f37c4f6d0909ebdd025c714397a8}{blinkstick\+\_\+device}
 \end{DoxyCompactItemize}
@@ -50,18 +46,10 @@ lib\+Blink\+Stick is meant to to be a simple library for talking to a blinkstick
 
 lib\+Blink\+Stick depends on hidapi for interacting with the U\+SB devices, but otherwise has no other dependencies.
 
-Included are functions to turn on and off any of the L\+E\+Ds and change their color via an rgb\+\_\+color struct. Multiple devices are supported. 
+Included are functions to turn on and off any of the L\+E\+Ds and change their color via an rgb color. Multiple devices are supported. 
 
 \subsection{Typedef Documentation}
-\mbox{\Hypertarget{libblinkstick_8h_a6431cb52c259f80dc1931e529bf89b74}\label{libblinkstick_8h_a6431cb52c259f80dc1931e529bf89b74}} 
-\index{libblinkstick.\+h@{libblinkstick.\+h}!blinkstick\+\_\+color@{blinkstick\+\_\+color}}
-\index{blinkstick\+\_\+color@{blinkstick\+\_\+color}!libblinkstick.\+h@{libblinkstick.\+h}}
-\subsubsection{\texorpdfstring{blinkstick\+\_\+color}{blinkstick\_color}}
-{\footnotesize\ttfamily typedef struct \hyperlink{structblinkstick__color}{blinkstick\+\_\+color}  \hyperlink{structblinkstick__color}{blinkstick\+\_\+color}}
-
-Represents an rgb color
-
-Constructed of 3 colors, each with a max value of 255 and a byte represenation of the rgb value for sending directly to the \hyperlink{structblinkstick__device}{blinkstick\+\_\+device} \mbox{\Hypertarget{libblinkstick_8h_afec7f37c4f6d0909ebdd025c714397a8}\label{libblinkstick_8h_afec7f37c4f6d0909ebdd025c714397a8}} 
+\mbox{\Hypertarget{libblinkstick_8h_afec7f37c4f6d0909ebdd025c714397a8}\label{libblinkstick_8h_afec7f37c4f6d0909ebdd025c714397a8}} 
 \index{libblinkstick.\+h@{libblinkstick.\+h}!blinkstick\+\_\+device@{blinkstick\+\_\+device}}
 \index{blinkstick\+\_\+device@{blinkstick\+\_\+device}!libblinkstick.\+h@{libblinkstick.\+h}}
 \subsubsection{\texorpdfstring{blinkstick\+\_\+device}{blinkstick\_device}}

@@ -29,14 +29,15 @@ static int const BLINKSTICK_INDEXED_LED_MSG_PACKET_SIZE = 6;
 /**
  * A blinkstick_device holds a pointer to the hid device
  * and is used when setting colors, modes, or turning the device
- * off. Construct this device by using find_blinksticks and
- * free it with destroy_blinkstick
+ * off. Construct this device by using blinkstick_find and
+ * free it with blinkstick_destroy.
  */
 typedef struct blinkstick_device { hid_device* handle; } blinkstick_device;
 
 /**
  * Given a count will return a pointer array of blinkstick
- * devices.
+ * devices. This will abort if the number found is less than
+ * the given count.
  */
 blinkstick_device** blinkstick_find_many(int count);
 

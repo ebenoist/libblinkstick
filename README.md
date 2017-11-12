@@ -32,7 +32,8 @@ OPTIONS
 
 ## Contributors
 Many thanks to the contributors who have helped out over the years.
-@jmtd
-@Raag079
+
+* @jmtd
+* @Raag079
 
 And many thanks to @arvydas!

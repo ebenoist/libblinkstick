@@ -29,3 +29,10 @@ OPTIONS
   --index which led should be set
   --debug turn on debug logging
 ```
+
+## Contributors
+Many thanks to the contributors who have helped out over the years.
+@jmtd
+@Raag079
+
+And many thanks to @arvydas!

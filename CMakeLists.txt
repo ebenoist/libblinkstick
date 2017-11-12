@@ -7,7 +7,6 @@ option(BUILD_DOC "Build documentation" ON)
 find_package(PkgConfig REQUIRED)
 pkg_search_module(HIDAPI REQUIRED hidapi)
 
-link_libraries(${HIDAPI_LIBRARIES})
 include_directories(PUBLIC ${HIDAPI_INCLUDE_DIRS})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/target)
@@ -30,8 +29,15 @@ else (DOXYGEN_FOUND)
   message("Doxygen need to be installed to generate the doxygen documentation")
 endif (DOXYGEN_FOUND)
 
-add_subdirectory(src)
+set(INSTALL_BIN_DIR "${CMAKE_INSTALL_PREFIX}/bin" CACHE PATH "Installation directory for executables")
+set(INSTALL_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib" CACHE PATH "Installation directory for libraries")
+set(INSTALL_INC_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "Installation directory for headers")
+set(INSTALL_MAN_DIR "${CMAKE_INSTALL_PREFIX}/share/man" CACHE PATH "Installation directory for manual pages")
+set(INSTALL_PKGCONFIG_DIR "${CMAKE_INSTALL_PREFIX}/share/pkgconfig" CACHE PATH "Installation directory for pkgconfig (.pc) files")
 
-add_custom_target(run_tests
-  COMMAND bash -c "${CMAKE_BINARY_DIR}/target/unit_tests"
-)
+configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/libblinkstick.pc.cmakein
+		${CMAKE_CURRENT_BINARY_DIR}/libblinkstick.pc @ONLY)
+
+install(FILES libblinkstick.pc DESTINATION "${INSTALL_PKGCONFIG_DIR}")
+
+add_subdirectory(src)

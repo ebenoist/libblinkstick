@@ -2,8 +2,7 @@
 *.o
 *.ko
 
-# Libraries
-*.lib
+# Libraries *.lib
 *.a
 *.la
 *.lo
@@ -49,3 +48,4 @@ target/*
 *.gch
 .DS_Store
 Doxyfile.bak
+Doxyfile

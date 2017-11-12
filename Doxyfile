@@ -1,4 +1,0 @@
-PROJECT_NAME = "libBlinkStick"
-PROJECT_BRIEF = "A simple blinkstick library"
-OUTPUT_DIRECTORY = docs/
-INPUT = /Users/ebenoist/dev/libblinkstick/src/

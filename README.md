@@ -1,7 +1,7 @@
 libBlinkStick
 =============
 
-A [blinkstick](http://www.blinkstick.com/) library in C with few dependencies.
+A [blinkstick](http://www.blinkstick.com/) library written in C
 
 ## [API Documentation](http://ebenoist.github.io/libblinkstick/html/libblinkstick_8h.html)
 

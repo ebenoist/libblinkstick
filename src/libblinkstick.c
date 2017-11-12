@@ -14,12 +14,27 @@ void debug(const char* fmt, ...) {
   }
 }
 
-void set_debug_true() {
+void blinkstick_debug() {
   print_debug = true;
   debug("STARTING LIBBLINKSTICK WITH DEBUG LOGGING");
 }
 
-blinkstick_device** find_blinksticks(int count) {
+unsigned char* rgb_to_char(int red, int green, int blue) {
+  unsigned char* bytes = malloc(sizeof(unsigned char[3]));
+  bytes[0] = (red & 0xff);
+  bytes[1] = (green & 0xff);
+  bytes[2] = (blue & 0xff);
+
+  return bytes;
+}
+
+blinkstick_device* blinkstick_factory(hid_device* handle) {
+  blinkstick_device* device = malloc(sizeof(blinkstick_device));
+  device->handle = handle;
+  return device;
+}
+
+blinkstick_device** blinkstick_find_many(int count) {
   blinkstick_device** devices = malloc(sizeof(blinkstick_device*) * count);
 
   debug("initializing usb context");
@@ -41,7 +56,7 @@ blinkstick_device** find_blinksticks(int count) {
     num++;
   }
 
-  if (count != num) {
+  if (count > num) {
     printf("did not find the number of devices wanted: %d, but found %d\n",
            count, num);
     exit(1);
@@ -50,19 +65,20 @@ blinkstick_device** find_blinksticks(int count) {
   return devices;
 }
 
-blinkstick_device* find_blinkstick() {
-  return find_blinksticks(1)[0];
+blinkstick_device* blinkstick_find() {
+  return blinkstick_find_many(1)[0];
 }
 
-unsigned char* build_control_message(int index, rgb_color* color) {
+unsigned char* build_control_message(int index, unsigned char* color) {
   // Write to the first LED present
   // this will be the _only_ led for the original blinkstick
   if (index == 0) {
-    unsigned char* msg = malloc(sizeof(unsigned char) * SINGLE_LED_MSG_SIZE);
+    unsigned char* msg =
+        malloc(sizeof(unsigned char) * BLINKSTICK_SINGLE_LED_MSG_SIZE);
     msg[0] = 0x1;
-    msg[1] = color->bytes[0];
-    msg[2] = color->bytes[1];
-    msg[3] = color->bytes[2];
+    msg[1] = color[0];
+    msg[2] = color[1];
+    msg[3] = color[2];
     return msg;
   }
 
@@ -70,62 +86,35 @@ unsigned char* build_control_message(int index, rgb_color* color) {
   // this changes the write mode (first two bytes) and then
   // assigns the index.
   unsigned char* msg =
-      malloc(sizeof(unsigned char) * INDEXED_LED_MSG_PACKET_SIZE);
+      malloc(sizeof(unsigned char) * BLINKSTICK_INDEXED_LED_MSG_PACKET_SIZE);
   msg[0] = 0x0005;
   msg[1] = 0x05;
   msg[2] = index;
-  msg[3] = color->bytes[0];
-  msg[4] = color->bytes[1];
-  msg[5] = color->bytes[2];
+  msg[3] = color[0];
+  msg[4] = color[1];
+  msg[5] = color[2];
 
   return msg;
 }
 
-void set_color(int index, rgb_color* color, blinkstick_device* blinkstick) {
+void blinkstick_set_color(blinkstick_device* blinkstick,
+                          int index,
+                          int red,
+                          int green,
+                          int blue) {
+  unsigned char* color = rgb_to_char(red, green, blue);
   unsigned char* msg = build_control_message(index, color);
+
   hid_write(blinkstick->handle, msg, sizeof(msg));
   free(msg);
+  free(color);
 }
 
-void off(int index, blinkstick_device* blinkstick) {
-  rgb_color* off = rgb_color_factory(0, 0, 0);
-  set_color(index, off, blinkstick);
-  destroy_color(off);
+void blinkstick_off(blinkstick_device* blinkstick, int index) {
+  blinkstick_set_color(blinkstick, index, 0, 0, 0);
 }
 
-void destroy_blinkstick(blinkstick_device* device) {
+void blinkstick_destroy(blinkstick_device* device) {
   hid_close(device->handle);
   free(device);
-}
-
-blinkstick_device* blinkstick_factory(hid_device* handle) {
-  blinkstick_device* device = malloc(sizeof(blinkstick_device));
-  device->handle = handle;
-  return device;
-}
-
-// RGB functions
-rgb_color* rgb_color_factory(int red, int green, int blue) {
-  rgb_color* color = malloc(sizeof(rgb_color));
-
-  color->red = red;
-  color->green = green;
-  color->blue = blue;
-  color->bytes = rgb_to_char(color);
-
-  return color;
-}
-
-unsigned char* rgb_to_char(rgb_color* color) {
-  unsigned char* bytes = malloc(sizeof(unsigned char[3]));
-  bytes[0] = (color->red & 0xff);
-  bytes[1] = (color->green & 0xff);
-  bytes[2] = (color->blue & 0xff);
-
-  return bytes;
-}
-
-void destroy_color(rgb_color* color) {
-  free(color->bytes);
-  free(color);
 }

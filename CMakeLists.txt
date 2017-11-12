@@ -2,7 +2,6 @@ cmake_minimum_required (VERSION 2.6)
 
 project (libblinkstick)
 
-enable_testing()
 option(BUILD_DOC "Build documentation" ON)
 
 find_package(PkgConfig REQUIRED)
@@ -32,11 +31,6 @@ else (DOXYGEN_FOUND)
 endif (DOXYGEN_FOUND)
 
 add_subdirectory(src)
-
-if (test)
-  add_subdirectory(seatest)
-  add_subdirectory(test)
-endif()
 
 add_custom_target(run_tests
   COMMAND bash -c "${CMAKE_BINARY_DIR}/target/unit_tests"

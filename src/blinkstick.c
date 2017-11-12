@@ -5,13 +5,27 @@ typedef struct arguments arguments;
 struct arguments;
 
 struct arguments {
-  rgb_color* color;
+  int red;
+  int green;
+  int blue;
   int count;
   int index;
 };
 
+void usage() {
+  printf("USAGE:\n\
+  blinkstick [options...]\n\
+OPTIONS\n\
+  --color set the color using a three rgb values\n\
+  --count set the number of blinkstick devices to address\n\
+  --index which led should be set\n\
+  --debug turn on debug logging\n");
+}
+
 struct arguments* parse_args(char** flags) {
   struct arguments* args = malloc(sizeof(arguments));
+  args->count = 1;
+  int color_set = 0;
 
   for (int i = 1; i < sizeof(flags); i++) {
     if (flags[i] != NULL) {
@@ -24,18 +38,25 @@ struct arguments* parse_args(char** flags) {
       }
 
       if (strcmp(flags[i], "--debug") == 0) {
-        set_debug_true();
+        blinkstick_debug();
       }
 
       if (strcmp(flags[i], "--color") == 0) {
-        char *red, *green, *blue;
-
-        red = *(flags + i + 1);
-        green = *(flags + i + 2);
-        blue = *(flags + i + 3);
-
-        args->color = rgb_color_factory(atoi(red), atoi(green), atoi(blue));
+        color_set = 1;
+        args->red = atoi(*(flags + i + 1));
+        args->green = atoi(*(flags + i + 2));
+        args->blue = atoi(*(flags + i + 3));
       }
+
+      if (strcmp(flags[i], "--help") == 0) {
+        usage();
+        exit(0);
+      }
+    }
+
+    if (color_set == 0) {
+      usage();
+      exit(1);
     }
   }
 
@@ -44,13 +65,13 @@ struct arguments* parse_args(char** flags) {
 
 int main(int argc, char** argv) {
   struct arguments* args = parse_args(argv);
-  blinkstick_device** devices = find_blinksticks(args->count);
+  blinkstick_device** devices = blinkstick_find_many(args->count);
 
   for (int j = 0; j < args->count; j++) {
-    set_color(args->index, args->color, devices[j]);
-    destroy_blinkstick(devices[j]);
+    blinkstick_set_color(devices[j], args->index, args->red, args->green,
+                         args->blue);
+    blinkstick_destroy(devices[j]);
   }
 
-  destroy_color(args->color);
   return 0;
 }

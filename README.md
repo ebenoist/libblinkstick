@@ -18,3 +18,14 @@ A [blinkstick](http://www.blinkstick.com/) library in C with few dependencies.
 Mostly a proof of concept for the library, the blinkstick CLI allows you to turn on and off any number of connected devices, set their colors, or target specific LEDs.
 
 After running make, you'll have a `blinkstick` binary in target/
+
+```
+$ blinkstick --help
+USAGE:
+  blinkstick [options...]
+OPTIONS
+  --color set the color using a three rgb values
+  --count set the number of blinkstick devices to address
+  --index which led should be set
+  --debug turn on debug logging
+```

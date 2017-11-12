@@ -12,7 +12,7 @@ A [blinkstick](http://www.blinkstick.com/) library written in C
 
 ## Getting Started
 - `cmake .` to generate the Makefiles for your system
-- `make` to build the library and CLI tool
+- `make install` to install the shared library and cli tool
 
 ## The CLI tool
 Mostly a proof of concept for the library, the blinkstick CLI allows you to turn on and off any number of connected devices, set their colors, or target specific LEDs.

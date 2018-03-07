@@ -4,8 +4,13 @@ project (libblinkstick)
 
 option(BUILD_DOC "Build documentation" ON)
 
-find_package(PkgConfig REQUIRED)
-pkg_search_module(HIDAPI REQUIRED hidapi)
+if(WIN32)
+  list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+  find_package(HIDAPI REQUIRED)
+else(WIN32)
+  find_package(PkgConfig REQUIRED)
+  pkg_search_module(HIDAPI REQUIRED hidapi)
+endif(WIN32)
 
 include_directories(PUBLIC ${HIDAPI_INCLUDE_DIRS})
 
@@ -13,7 +18,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/target)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/target)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/target)
 
-set(COMMON_INCLUDES ${PROJECT_SOURCE_DIR}/src ${PROJECT_SOURCE_DIR}/seatest ${HIDAPI_INCLUDE_DIRS})
 if(BUILD_DOCS)
   find_package(Doxygen)
   if (DOXYGEN_FOUND)

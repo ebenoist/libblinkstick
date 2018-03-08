@@ -35,5 +35,6 @@ Many thanks to the contributors who have helped out over the years.
 
 * @jmtd
 * @Raag079
+* @DeveloperPaul123
 
 And many thanks to @arvydas!

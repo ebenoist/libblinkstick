@@ -1,13 +1,17 @@
-include_directories(${COMMON_INCLUDES})
+
 
 # LIBRARY
-add_library(libblinkstick libblinkstick.c)
-target_link_libraries(libblinkstick ${HIDAPI_LIBRARIES})
+add_library(libblinkstick libblinkstick.c libblinkstick.h)
+target_include_directories(libblinkstick 
+        PUBLIC
+          ${CMAKE_CURRENT_SOURCE_DIR}
+          ${HID_INCLUDE_DIRS})
+target_link_libraries(libblinkstick PUBLIC ${HIDAPI_LIBRARIES})
 set_target_properties(libblinkstick PROPERTIES OUTPUT_NAME blinkstick)
 
 # CLI TOOL
 add_executable(blinkstick blinkstick.c)
-target_link_libraries(blinkstick libblinkstick)
+target_link_libraries(blinkstick PUBLIC libblinkstick)
 
 install(TARGETS blinkstick libblinkstick
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}"

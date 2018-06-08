@@ -18,6 +18,7 @@ struct arguments {
   int blue;
   int count;
   int index;
+  int channel;
 };
 
 void usage() {
@@ -27,6 +28,7 @@ OPTIONS\n\
   --color set the color using a three rgb values\n\
   --count set the number of blinkstick devices to address\n\
   --index which led should be set\n\
+  --channel which channel to use (BlinkStick Pro)\n\
   --debug turn on debug logging\n");
 }
 
@@ -44,6 +46,10 @@ struct arguments* parse_args(char** flags) {
       if (strcmp(flags[i], "--index") == 0) {
         args->index = atoi(*(flags + i + 1));
       }
+
+	  if (strcmp(flags[i], "--channel") == 0) {
+		  args->channel = atoi(*(flags + i + 1));
+	  }
 
       if (strcmp(flags[i], "--debug") == 0) {
         blinkstick_debug();
@@ -76,10 +82,14 @@ int main(int argc, char** argv) {
   blinkstick_device** devices = blinkstick_find_many(args->count);
 
   for (int j = 0; j < args->count; j++) {
-    blinkstick_set_color(devices[j], args->index, args->red, args->green,
+    // set the color
+    blinkstick_set_color(devices[j], args->channel, args->index, args->red, args->green,
                          args->blue);
+    // free the device
     blinkstick_destroy(devices[j]);
   }
 
+  // possibly unecessary, but good practice nonetheless. 
+  free(args);
   return 0;
 }

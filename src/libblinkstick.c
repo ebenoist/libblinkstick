@@ -43,14 +43,14 @@ blinkstick_device** blinkstick_find_many(int count) {
   blinkstick_device** devices = malloc(sizeof(blinkstick_device*) * count);
 
   debug("initializing usb context");
-  int res = hid_init();
+  const int res = hid_init();
   if (res != 0) {
     debug("failed to initialize hid");
     exit(1);
   }
 
-  struct hid_device_info* device_info;
-  device_info = hid_enumerate(BLINKSTICK_VENDOR_ID, BLINKSTICK_PRODUCT_ID);
+  struct hid_device_info * device_info = 
+	  hid_enumerate(BLINKSTICK_VENDOR_ID, BLINKSTICK_PRODUCT_ID);
   devices[0] = blinkstick_factory(hid_open_path(device_info->path));
   debug("found device: %s", device_info->path);
 
@@ -74,49 +74,71 @@ blinkstick_device* blinkstick_find() {
   return blinkstick_find_many(1)[0];
 }
 
-unsigned char* build_control_message(int index, unsigned char* color) {
-  // Write to the first LED present
-  // this will be the _only_ led for the original blinkstick
-  if (index == 0) {
+unsigned char* build_control_message(int index, int channel, unsigned char* color) {
+	// Write to the first LED present
+	// this will be the _only_ led for the original blinkstick
+    if (index == 0 && channel == 0)
+    {
+	    unsigned char* msg =
+		    malloc(sizeof(unsigned char) * BLINKSTICK_SINGLE_LED_MSG_SIZE);
+	    msg[0] = 0x1;
+	    msg[1] = color[0];
+	    msg[2] = color[1];
+	    msg[3] = color[2];
+	    return msg;
+    }
+
+	// Writing to the other LEDs requires a different payload
+	// this changes the write mode (first two bytes) and then
+	// assigns the index.
     unsigned char* msg =
-        malloc(sizeof(unsigned char) * BLINKSTICK_SINGLE_LED_MSG_SIZE);
-    msg[0] = 0x1;
-    msg[1] = color[0];
-    msg[2] = color[1];
-    msg[3] = color[2];
+	    malloc(sizeof(unsigned char) * BLINKSTICK_INDEXED_LED_MSG_PACKET_SIZE);
+    msg[0] = 0x5;
+    msg[1] = channel;
+    msg[2] = index;
+    msg[3] = color[0];
+    msg[4] = color[1];
+    msg[5] = color[2];
     return msg;
-  }
+}
 
-  // Writing to the other LEDs requires a different payload
-  // this changes the write mode (first two bytes) and then
-  // assigns the index.
-  unsigned char* msg =
-      malloc(sizeof(unsigned char) * BLINKSTICK_INDEXED_LED_MSG_PACKET_SIZE);
-  msg[0] = 0x0005;
-  msg[1] = 0x05;
-  msg[2] = index;
-  msg[3] = color[0];
-  msg[4] = color[1];
-  msg[5] = color[2];
+unsigned char* build_mode_message(const int mode) {
+	unsigned char* msg =
+		malloc(sizeof(unsigned char) * BLINKSTICK_MODE_MSG_SIZE);
+	msg[0] = 0x0004;
+	msg[1] = mode;
+	return msg;
+}
 
-  return msg;
+void blinkstick_set_mode(blinkstick_device* blinkstick, const enum blinkstick_mode mode) {
+	unsigned char* msg = build_mode_message(mode);
+	const int result = hid_send_feature_report(blinkstick->handle, msg, sizeof(msg));
+	if (result == -1)
+	{
+		debug("error writing mode to device!");
+	}
+	free(msg);
 }
 
 void blinkstick_set_color(blinkstick_device* blinkstick,
-                          int index,
-                          int red,
-                          int green,
-                          int blue) {
-  unsigned char* color = rgb_to_char(red, green, blue);
-  unsigned char* msg = build_control_message(index, color);
-
-  hid_write(blinkstick->handle, msg, sizeof(msg));
-  free(msg);
-  free(color);
+		int channel,
+		int index, 
+		int red,
+		int green,
+		int blue) {
+	unsigned char* color = rgb_to_char(red, green, blue);
+	unsigned char* msg = build_control_message(index, channel, color);
+	const int result = hid_send_feature_report(blinkstick->handle, msg, sizeof(msg));
+	if (result == -1)
+	{
+		debug("error writing color to device!");
+	}
+	free(msg);
+	free(color);
 }
 
-void blinkstick_off(blinkstick_device* blinkstick, int index) {
-  blinkstick_set_color(blinkstick, index, 0, 0, 0);
+void blinkstick_off(blinkstick_device* blinkstick, int channel, int index) {
+  blinkstick_set_color(blinkstick, channel, index, 0, 0, 0);
 }
 
 void blinkstick_destroy(blinkstick_device* device) {

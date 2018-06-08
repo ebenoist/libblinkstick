@@ -20,6 +20,7 @@
 static int const BLINKSTICK_VENDOR_ID = 8352;    //"0X20A0";
 static int const BLINKSTICK_PRODUCT_ID = 16869;  //"0X41E5";
 
+static int const BLINKSTICK_MODE_MSG_SIZE = 2;
 static int const BLINKSTICK_SINGLE_LED_MSG_SIZE = 4;
 static int const BLINKSTICK_INDEXED_LED_MSG_PACKET_SIZE = 6;
 
@@ -30,6 +31,11 @@ static int const BLINKSTICK_INDEXED_LED_MSG_PACKET_SIZE = 6;
  * free it with blinkstick_destroy.
  */
 typedef struct blinkstick_device { hid_device* handle; } blinkstick_device;
+
+/**
+ * Possible blink stick modes (only valid for Blinkstick Pro).
+ */
+enum blinkstick_mode { normal =0, inverse =1, smart_pixel=2};
 
 /**
  * Given a count will return a pointer array of blinkstick
@@ -48,20 +54,30 @@ blinkstick_device* blinkstick_find();
  * Sets the LED at the given index to the specified color for the
  * provided device
  */
-void blinkstick_set_color(blinkstick_device* device,
-                          int index,
-                          int red,
-                          int green,
-                          int blue);
+void blinkstick_set_color(blinkstick_device* blinkstick,
+						  int channel,
+						  int index,
+						  int red,
+						  int green,
+						  int blue);
+/**
+ * Set the mode of the blinkstick. Possible modes are "normal" (non-inverse LED control), 
+ * "inverse" (LED values are inverted) and "smart" (LEDs are WS2812 smart LEDs). 
+ * Note that you'll need to implement a delay after setting the mode before setting the 
+ * color on the blinkstick device. 
+ */
+void blinkstick_set_mode(blinkstick_device* blinkstick, const enum blinkstick_mode mode);
 
 /**
  * Turns off the led at the specified index for the provided device.
  *
  * This is the same as using set_color with the RGB value (0, 0, 0)
  */
-void blinkstick_off(blinkstick_device* device, int index);
+void blinkstick_off(blinkstick_device* device, int channel, int index);
 
-// Turns on debug logging.
+/**
+ * Turns on debug logging. 
+ */
 void blinkstick_debug();
 
 /**

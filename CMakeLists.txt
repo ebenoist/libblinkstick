@@ -3,6 +3,7 @@ cmake_minimum_required (VERSION 2.6)
 project (libblinkstick)
 
 option(BUILD_DOC "Build documentation" ON)
+option(BUILD_CLI "Build command line BlinkStick control program" ON)
 
 if(WIN32)
   list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
@@ -18,7 +19,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/target)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/target)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/target)
 
-if(BUILD_DOCS)
+if(BUILD_DOC)
   find_package(Doxygen)
   if (DOXYGEN_FOUND)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
@@ -32,7 +33,7 @@ if(BUILD_DOCS)
   else()
     message("Doxygen needs to be installed to generate the doxygen documentation")
   endif (DOXYGEN_FOUND)
-endif(BUILD_DOCS)
+endif(BUILD_DOC)
 
 
 set(INSTALL_BIN_DIR "${CMAKE_INSTALL_PREFIX}/bin" CACHE PATH "Installation directory for executables")

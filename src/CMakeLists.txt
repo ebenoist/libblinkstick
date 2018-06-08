@@ -12,6 +12,7 @@ set_target_properties(libblinkstick PROPERTIES OUTPUT_NAME blinkstick)
 # CLI TOOL
 add_executable(blinkstick blinkstick.c)
 target_link_libraries(blinkstick PUBLIC libblinkstick)
+add_dependencies(blinkstick libblinkstick)
 
 install(TARGETS blinkstick libblinkstick
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}"

@@ -1,8 +1,6 @@
-
-
 # LIBRARY
 add_library(libblinkstick libblinkstick.c libblinkstick.h)
-target_include_directories(libblinkstick 
+target_include_directories(libblinkstick
         PUBLIC
           ${CMAKE_CURRENT_SOURCE_DIR}
           ${HID_INCLUDE_DIRS})
@@ -13,12 +11,13 @@ install(TARGETS libblinkstick
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
         ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
         LIBRARY DESTINATION "${INSTALL_LIB_DIR}")
-        
+
 install(FILES libblinkstick.h DESTINATION "${INSTALL_INC_DIR}")
 
 if(BUILD_CLI)
     # CLI TOOL
     add_executable(blinkstick blinkstick.c)
+    add_dependencies(blinkstick libblinkstick)
     target_link_libraries(blinkstick PUBLIC libblinkstick)
 
     install(TARGETS blinkstick
@@ -26,4 +25,3 @@ if(BUILD_CLI)
             ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
             LIBRARY DESTINATION "${INSTALL_LIB_DIR}")
 endif(BUILD_CLI)
-

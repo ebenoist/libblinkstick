@@ -6,6 +6,7 @@ target_include_directories(libblinkstick
           ${HID_INCLUDE_DIRS})
 target_link_libraries(libblinkstick PUBLIC ${HIDAPI_LIBRARIES})
 set_target_properties(libblinkstick PROPERTIES OUTPUT_NAME blinkstick)
+set_property(TARGET libblinkstick PROPERTY C_STANDARD 11)
 
 install(TARGETS libblinkstick
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}"

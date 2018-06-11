@@ -1,6 +1,7 @@
 #pragma once
 
 #include <hidapi/hidapi.h>
+#include <stdbool.h>
 
 /**
  * @file libblinkstick.h
@@ -71,7 +72,7 @@ blinkstick_device* blinkstick_find();
  * @param green the green component of the new color.
  * @param blue the blue component of the new color.
  */
-void blinkstick_set_color(blinkstick_device* blinkstick,
+bool blinkstick_set_color(blinkstick_device* blinkstick,
 						  int channel,
 						  int index,
 						  int red,
@@ -84,13 +85,13 @@ void blinkstick_set_color(blinkstick_device* blinkstick,
  * Note that you'll need to implement a delay after setting the mode before setting the 
  * color on the blinkstick device. 
  */
-void blinkstick_set_mode(blinkstick_device* blinkstick, const enum blinkstick_mode mode);
+bool blinkstick_set_mode(blinkstick_device* blinkstick, enum blinkstick_mode mode);
 
 /**
  * @brief Turns off the led at the specified index for the provided device.
  * This is the same as using set_color with the RGB value (0, 0, 0)
  */
-void blinkstick_off(blinkstick_device* device, int channel, int index);
+bool blinkstick_off(blinkstick_device* blinkstick, int channel, int index);
 
 /**
  * @brief Turns on debug logging. 

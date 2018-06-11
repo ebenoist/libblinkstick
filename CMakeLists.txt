@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 
-project (libblinkstick)
+project (libblinkstick LANGUAGES C)
 
 option(BUILD_DOCS "Build documentation" ON)
 option(BUILD_CLI "Build command line BlinkStick control program" ON)

@@ -6,8 +6,8 @@
  * @file libblinkstick.h
  * @brief Header for libBlinkStick
  *
- * libBlinkStick is meant to to be a simple library for talking to a blinkstick
- * Both the blinkstick square and blinkstick v1.1 are officially supported and
+ * libBlinkStick is meant to to be a simple library for talking to a blinkstick.
+ * The BlinkStick Square, BlinkStick v1.1, and the BlinkStick Pro are officially supported and
  * it's likely that other devices work as well.
  *
  * libBlinkStick depends on hidapi for interacting with the USB devices, but
@@ -25,34 +25,51 @@ static int const BLINKSTICK_SINGLE_LED_MSG_SIZE = 4;
 static int const BLINKSTICK_INDEXED_LED_MSG_PACKET_SIZE = 6;
 
 /**
- * A blinkstick_device holds a pointer to the hid device
+ * @brief A blinkstick_device holds a pointer to the hid device
  * and is used when setting colors, modes, or turning the device
- * off. Construct this device by using blinkstick_find and
- * free it with blinkstick_destroy.
+ * off. 
+ * @details Construct this device by using blinkstick_find and
+ * free it with blinkstick_destroy. Example:
+ * @code
+ * blinkstick_device* device = blinkstick_find();
+ * // destroy
+ * blinkstick_destroy(device);
+ * @endcode
  */
 typedef struct blinkstick_device { hid_device* handle; } blinkstick_device;
 
 /**
- * Possible blink stick modes (only valid for Blinkstick Pro).
+ * @brief Possible blink stick modes (only valid for Blinkstick Pro).
  */
 enum blinkstick_mode { normal =0, inverse =1, smart_pixel=2};
 
 /**
- * Given a count will return a pointer array of blinkstick
+ * @brief Given a count will return a pointer array of blinkstick
  * devices. This will abort if the number found is less than
  * the given count.
+ * @param count the number of blinkstick devices to find. 
+ * @return an array of blinkstick device pointers. 
  */
 blinkstick_device** blinkstick_find_many(int count);
 
 /**
- * Find the first blinkstick device on the bus registered
+ * @brief Find the first blinkstick device on the bus registered
  * with HID.
+ * @details Note the caller is responsible for deleting the instance of
+ * the blinkstick_device using blinkstick_destroy.
+ * @return pointer to a blinkstick_device. 
  */
 blinkstick_device* blinkstick_find();
 
 /**
- * Sets the LED at the given index to the specified color for the
- * provided device
+ * @brief Sets the LED at the given index and channel to the specified color for the
+ * provided device.
+ * @param blinkstick pointer to the blinkstick_device to modify.
+ * @param channel the channel to set the LED color on.
+ * @param index which LED to set the color of.
+ * @param red the red component of the new color.
+ * @param green the green component of the new color.
+ * @param blue the blue component of the new color.
  */
 void blinkstick_set_color(blinkstick_device* blinkstick,
 						  int channel,
@@ -61,7 +78,8 @@ void blinkstick_set_color(blinkstick_device* blinkstick,
 						  int green,
 						  int blue);
 /**
- * Set the mode of the blinkstick. Possible modes are "normal" (non-inverse LED control), 
+ * @brief Set the mode of the blinkstick. 
+ * @details Possible modes are "normal" (non-inverse LED control), 
  * "inverse" (LED values are inverted) and "smart" (LEDs are WS2812 smart LEDs). 
  * Note that you'll need to implement a delay after setting the mode before setting the 
  * color on the blinkstick device. 
@@ -69,18 +87,18 @@ void blinkstick_set_color(blinkstick_device* blinkstick,
 void blinkstick_set_mode(blinkstick_device* blinkstick, const enum blinkstick_mode mode);
 
 /**
- * Turns off the led at the specified index for the provided device.
- *
+ * @brief Turns off the led at the specified index for the provided device.
  * This is the same as using set_color with the RGB value (0, 0, 0)
  */
 void blinkstick_off(blinkstick_device* device, int channel, int index);
 
 /**
- * Turns on debug logging. 
+ * @brief Turns on debug logging. 
  */
 void blinkstick_debug();
 
 /**
- * Frees the given blinkstick device
+ * @brief Frees the given blinkstick device
+ * @param device the device to free. 
  */
 void blinkstick_destroy(blinkstick_device* device);

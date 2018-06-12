@@ -3,8 +3,8 @@ add_library(libblinkstick libblinkstick.c libblinkstick.h)
 target_include_directories(libblinkstick
         PUBLIC
           ${CMAKE_CURRENT_SOURCE_DIR}
-          ${HID_INCLUDE_DIRS})
-target_link_libraries(libblinkstick PUBLIC ${HIDAPI_LIBRARIES})
+          ${HIDAPI_INCLUDE_DIR})
+target_link_libraries(libblinkstick PUBLIC ${HIDAPI_LIBRARY})
 set_target_properties(libblinkstick PROPERTIES OUTPUT_NAME blinkstick)
 set_property(TARGET libblinkstick PROPERTY C_STANDARD 11)
 

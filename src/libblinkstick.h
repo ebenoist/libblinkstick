@@ -73,11 +73,11 @@ blinkstick_device* blinkstick_find();
  * @param blue the blue component of the new color.
  */
 bool blinkstick_set_color(blinkstick_device* blinkstick,
-						  int channel,
-						  int index,
-						  int red,
-						  int green,
-						  int blue);
+						  const int channel,
+						  const int index,
+						  const int red,
+						  const int green,
+						  const int blue);
 /**
  * @brief Set the mode of the blinkstick. 
  * @details Possible modes are "normal" (non-inverse LED control), 
@@ -91,7 +91,7 @@ bool blinkstick_set_mode(blinkstick_device* blinkstick, enum blinkstick_mode mod
  * @brief Turns off the led at the specified index for the provided device.
  * This is the same as using set_color with the RGB value (0, 0, 0)
  */
-bool blinkstick_off(blinkstick_device* blinkstick, int channel, int index);
+bool blinkstick_off(blinkstick_device* blinkstick, const int channel, const int index);
 
 /**
  * @brief Turns on debug logging. 

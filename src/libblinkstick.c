@@ -1,11 +1,14 @@
 #include "libblinkstick.h"
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
 
 bool print_debug = false;
+
+#if _WINDOWS
+#pragma warning(disable:4996)
+#endif
 
 void debug(const char* fmt, ...) {
   if (print_debug) {

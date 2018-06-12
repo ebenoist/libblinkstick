@@ -74,7 +74,7 @@ blinkstick_device* blinkstick_find() {
   return blinkstick_find_many(1)[0];
 }
 
-unsigned char* build_control_message(int index, int channel, unsigned char* color) {
+unsigned char* build_control_message(const int index, const int channel, unsigned char* color) {
 	// Write to the first LED present
 	// this will be the _only_ led for the original blinkstick
     if (index == 0 && channel == 0)
@@ -110,35 +110,54 @@ unsigned char* build_mode_message(const int mode) {
 	return msg;
 }
 
-void blinkstick_set_mode(blinkstick_device* blinkstick, const enum blinkstick_mode mode) {
+bool is_null(blinkstick_device* blinkstick)
+{
+	return blinkstick->handle == NULL;
+}
+
+bool blinkstick_set_mode(blinkstick_device* blinkstick, const enum blinkstick_mode mode) {
 	unsigned char* msg = build_mode_message(mode);
+	if (is_null(blinkstick))
+	{
+		debug("input hid handle is null.");
+		return false;
+	}
 	const int result = hid_send_feature_report(blinkstick->handle, msg, sizeof(msg));
 	if (result == -1)
 	{
 		debug("error writing mode to device!");
+		return false;
 	}
 	free(msg);
+	return true;
 }
 
-void blinkstick_set_color(blinkstick_device* blinkstick,
-		int channel,
-		int index, 
-		int red,
-		int green,
-		int blue) {
+bool blinkstick_set_color(blinkstick_device* blinkstick,
+                          const int channel,
+                          const int index,
+                          const int red,
+                          const int green,
+                          const int blue) {
+	if (is_null(blinkstick))
+	{
+		debug("input hid handle is null.");
+		return false;
+	}
 	unsigned char* color = rgb_to_char(red, green, blue);
 	unsigned char* msg = build_control_message(index, channel, color);
 	const int result = hid_send_feature_report(blinkstick->handle, msg, sizeof(msg));
 	if (result == -1)
 	{
 		debug("error writing color to device!");
+		return false;
 	}
 	free(msg);
 	free(color);
+	return true;
 }
 
-void blinkstick_off(blinkstick_device* blinkstick, int channel, int index) {
-  blinkstick_set_color(blinkstick, channel, index, 0, 0, 0);
+bool blinkstick_off(blinkstick_device* blinkstick, const int channel, const int index) {
+  return blinkstick_set_color(blinkstick, channel, index, 0, 0, 0);
 }
 
 void blinkstick_destroy(blinkstick_device* device) {

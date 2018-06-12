@@ -33,8 +33,8 @@ OPTIONS
 ## Contributors
 Many thanks to the contributors who have helped out over the years.
 
-* @jmtd
+* [@jmtd](https://github.com/jmtd)
 * @Raag079
-* @DeveloperPaul123
+* [@DeveloperPaul123](https://github.com/DeveloperPaul123)
 
 And many thanks to @arvydas!

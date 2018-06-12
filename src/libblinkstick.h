@@ -38,11 +38,16 @@ static int const BLINKSTICK_INDEXED_LED_MSG_PACKET_SIZE = 6;
  * @endcode
  */
 typedef struct blinkstick_device { hid_device* handle; } blinkstick_device;
+typedef struct blinkstick_color {
+	unsigned char red;
+	unsigned char green;
+	unsigned char blue;
+} blinkstick_color;
 
 /**
  * @brief Possible blink stick modes (only valid for Blinkstick Pro).
  */
-enum blinkstick_mode { normal =0, inverse =1, smart_pixel=2};
+enum blinkstick_mode { unknown=-1, normal =0, inverse =1, smart_pixel=2};
 
 /**
  * @brief Given a count will return a pointer array of blinkstick
@@ -78,6 +83,15 @@ bool blinkstick_set_color(blinkstick_device* blinkstick,
 						  const int red,
 						  const int green,
 						  const int blue);
+
+/**
+ * @brief Reads the color from the blinkstick at a given index.
+ * @param blinkstick pointer to the blinckstick_device to read from.
+ * @param index the index of the LED to read from.
+ * @return pointer to a blinkstick_color struct containing the read color.
+ */
+blinkstick_color* blinkstick_get_color(struct blinkstick_device* blinkstick, const int index);
+
 /**
  * @brief Set the mode of the blinkstick. 
  * @details Possible modes are "normal" (non-inverse LED control), 
@@ -86,6 +100,13 @@ bool blinkstick_set_color(blinkstick_device* blinkstick,
  * color on the blinkstick device. 
  */
 bool blinkstick_set_mode(blinkstick_device* blinkstick, enum blinkstick_mode mode);
+
+/**
+ * @brief Read the mode currently set on the blinkstick.
+ * @param blinkstick pointer to the blinkstick device.
+ * @return the current mode.
+ */
+enum blinkstick_mode blinkstick_get_mode(blinkstick_device* blinkstick);
 
 /**
  * @brief Turns off the led at the specified index for the provided device.

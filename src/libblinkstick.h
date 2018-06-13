@@ -3,6 +3,10 @@
 #include <hidapi/hidapi.h>
 #include <stdbool.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @file libblinkstick.h
  * @brief Header for libBlinkStick
@@ -124,3 +128,7 @@ void blinkstick_debug();
  * @param device the device to free. 
  */
 void blinkstick_destroy(blinkstick_device* device);
+
+#ifdef __cplusplus
+}
+#endif

@@ -3,6 +3,16 @@
 #include <hidapi/hidapi.h>
 #include <stdbool.h>
 
+#ifdef _WIN32
+    #ifdef libblinkstick_EXPORTS
+        #define BLINKSTICK_API __declspec(dllexport)
+    #else
+        #define BLINKSTICK_API
+    #endif
+#else
+    #define BLINKSTICK_API
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -60,7 +70,7 @@ enum blinkstick_mode { unknown=-1, normal =0, inverse =1, smart_pixel=2};
  * @param count the number of blinkstick devices to find. 
  * @return an array of blinkstick device pointers. 
  */
-blinkstick_device** blinkstick_find_many(const int count);
+BLINKSTICK_API blinkstick_device** blinkstick_find_many(const int count);
 
 /**
  * @brief Find the first blinkstick device on the bus registered
@@ -69,7 +79,7 @@ blinkstick_device** blinkstick_find_many(const int count);
  * the blinkstick_device using blinkstick_destroy.
  * @return pointer to a blinkstick_device. 
  */
-blinkstick_device* blinkstick_find();
+BLINKSTICK_API blinkstick_device* blinkstick_find();
 
 /**
  * @brief Sets the LED at the given index and channel to the specified color for the
@@ -81,7 +91,7 @@ blinkstick_device* blinkstick_find();
  * @param green the green component of the new color.
  * @param blue the blue component of the new color.
  */
-bool blinkstick_set_color(blinkstick_device* blinkstick,
+BLINKSTICK_API bool blinkstick_set_color(blinkstick_device* blinkstick,
 						  const int channel,
 						  const int index,
 						  const int red,
@@ -94,7 +104,7 @@ bool blinkstick_set_color(blinkstick_device* blinkstick,
  * @param index the index of the LED to read from.
  * @return pointer to a blinkstick_color struct containing the read color.
  */
-blinkstick_color* blinkstick_get_color(struct blinkstick_device* blinkstick, const int index);
+BLINKSTICK_API blinkstick_color* blinkstick_get_color(struct blinkstick_device* blinkstick, const int index);
 
 /**
  * @brief Set the mode of the blinkstick. 
@@ -103,31 +113,31 @@ blinkstick_color* blinkstick_get_color(struct blinkstick_device* blinkstick, con
  * Note that you'll need to implement a delay after setting the mode before setting the 
  * color on the blinkstick device. 
  */
-bool blinkstick_set_mode(blinkstick_device* blinkstick, enum blinkstick_mode mode);
+BLINKSTICK_API bool blinkstick_set_mode(blinkstick_device* blinkstick, enum blinkstick_mode mode);
 
 /**
  * @brief Read the mode currently set on the blinkstick.
  * @param blinkstick pointer to the blinkstick device.
  * @return the current mode.
  */
-enum blinkstick_mode blinkstick_get_mode(blinkstick_device* blinkstick);
+BLINKSTICK_API enum blinkstick_mode blinkstick_get_mode(blinkstick_device* blinkstick);
 
 /**
  * @brief Turns off the led at the specified index for the provided device.
  * This is the same as using set_color with the RGB value (0, 0, 0)
  */
-bool blinkstick_off(blinkstick_device* blinkstick, const int channel, const int index);
+BLINKSTICK_API bool blinkstick_off(blinkstick_device* blinkstick, const int channel, const int index);
 
 /**
  * @brief Turns on debug logging. 
  */
-void blinkstick_debug();
+BLINKSTICK_API void blinkstick_debug();
 
 /**
  * @brief Frees the given blinkstick device
  * @param device the device to free. 
  */
-void blinkstick_destroy(blinkstick_device* device);
+BLINKSTICK_API void blinkstick_destroy(blinkstick_device* device);
 
 #ifdef __cplusplus
 }

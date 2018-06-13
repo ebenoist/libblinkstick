@@ -42,32 +42,41 @@ blinkstick_device* blinkstick_factory(hid_device* handle) {
   return device;
 }
 
-blinkstick_device** blinkstick_find_many(int count) {
+blinkstick_device** blinkstick_find_many(const int count) {
   blinkstick_device** devices = malloc(sizeof(blinkstick_device*) * count);
+  // initialize the devices
+  for (int i = 0; i < count; i++)
+  {
+	  devices[i] = blinkstick_factory(NULL);
+  }
 
   debug("initializing usb context");
   const int res = hid_init();
   if (res != 0) {
     debug("failed to initialize hid");
-    exit(1);
+	return devices;
   }
 
   struct hid_device_info * device_info = 
 	  hid_enumerate(BLINKSTICK_VENDOR_ID, BLINKSTICK_PRODUCT_ID);
-  devices[0] = blinkstick_factory(hid_open_path(device_info->path));
+  if (device_info == NULL)
+  {
+	  return devices;
+  }
+  
+  devices[0]->handle = hid_open_path(device_info->path);
   debug("found device: %s", device_info->path);
 
   int num = 1;
   while ((device_info = device_info->next)) {
-    devices[num] = blinkstick_factory(hid_open_path(device_info->path));
+    devices[num]->handle = hid_open_path(device_info->path);
     debug("found device: %s", device_info->path);
     num++;
   }
 
   if (count > num) {
-    printf("did not find the number of devices wanted: %d, but found %d\n",
+    debug("did not find the number of devices wanted: %d, but found %d\n",
            count, num);
-    exit(1);
   }
 
   return devices;

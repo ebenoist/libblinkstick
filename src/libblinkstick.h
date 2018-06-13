@@ -56,7 +56,7 @@ enum blinkstick_mode { unknown=-1, normal =0, inverse =1, smart_pixel=2};
  * @param count the number of blinkstick devices to find. 
  * @return an array of blinkstick device pointers. 
  */
-blinkstick_device** blinkstick_find_many(int count);
+blinkstick_device** blinkstick_find_many(const int count);
 
 /**
  * @brief Find the first blinkstick device on the bus registered

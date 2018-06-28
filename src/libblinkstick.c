@@ -1,11 +1,14 @@
 #include "libblinkstick.h"
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
 
 bool print_debug = false;
+
+#if _WINDOWS
+#pragma warning(disable:4996)
+#endif
 
 void debug(const char* fmt, ...) {
   if (print_debug) {
@@ -39,32 +42,41 @@ blinkstick_device* blinkstick_factory(hid_device* handle) {
   return device;
 }
 
-blinkstick_device** blinkstick_find_many(int count) {
+blinkstick_device** blinkstick_find_many(const int count) {
   blinkstick_device** devices = malloc(sizeof(blinkstick_device*) * count);
+  // initialize the devices
+  for (int i = 0; i < count; i++)
+  {
+	  devices[i] = blinkstick_factory(NULL);
+  }
 
   debug("initializing usb context");
   const int res = hid_init();
   if (res != 0) {
     debug("failed to initialize hid");
-    exit(1);
+	return devices;
   }
 
   struct hid_device_info * device_info = 
 	  hid_enumerate(BLINKSTICK_VENDOR_ID, BLINKSTICK_PRODUCT_ID);
-  devices[0] = blinkstick_factory(hid_open_path(device_info->path));
+  if (device_info == NULL)
+  {
+	  return devices;
+  }
+  
+  devices[0]->handle = hid_open_path(device_info->path);
   debug("found device: %s", device_info->path);
 
   int num = 1;
   while ((device_info = device_info->next)) {
-    devices[num] = blinkstick_factory(hid_open_path(device_info->path));
+    devices[num]->handle = hid_open_path(device_info->path);
     debug("found device: %s", device_info->path);
     num++;
   }
 
   if (count > num) {
-    printf("did not find the number of devices wanted: %d, but found %d\n",
+    debug("did not find the number of devices wanted: %d, but found %d\n",
            count, num);
-    exit(1);
   }
 
   return devices;
@@ -132,6 +144,23 @@ bool blinkstick_set_mode(blinkstick_device* blinkstick, const enum blinkstick_mo
 	return true;
 }
 
+enum blinkstick_mode blinkstick_get_mode(blinkstick_device *blinkstick)
+{
+	unsigned char* data = malloc(sizeof(unsigned char) * 2);
+	data[0] = 0x0004;
+	const int result = hid_get_feature_report(blinkstick->handle, data, 2);
+	if (result == -1)
+	{
+		debug("error reading mode from device.");
+		return unknown;
+	}
+
+    const enum blinkstick_mode return_mode = data[1];
+	free(data); // cleanup
+	return return_mode;
+}
+
+
 bool blinkstick_set_color(blinkstick_device* blinkstick,
                           const int channel,
                           const int index,
@@ -155,6 +184,92 @@ bool blinkstick_set_color(blinkstick_device* blinkstick,
 	free(color);
 	return true;
 }
+
+int determine_report_id(const int count, int* max_leds)
+{
+	int report_id = 9;
+
+	if (count <= 8 *3)
+	{
+		*max_leds = 8;
+		report_id = 6;
+	}
+	else if (count <= 16 * 3)
+	{
+		*max_leds = 16;
+		report_id = 7;
+	}
+	else if (count <= 32 * 3)
+	{
+		*max_leds = 32;
+		report_id = 8;
+	}
+	else if (count <= 64 * 3)
+	{
+		*max_leds = 64;
+		report_id = 9;
+	}
+
+	return report_id;
+}
+
+blinkstick_color* blinkstick_get_color(struct blinkstick_device* blinkstick, const int index)
+{
+	blinkstick_color *color = malloc(sizeof(blinkstick_color));
+	color->red = 0;
+	color->green = 0;
+	color->blue = 0;
+
+	if (index == 0)
+	{
+		unsigned char* data = malloc(sizeof(unsigned char) * 33);
+		data[0] = 0x0001;
+		const int result = hid_get_feature_report(blinkstick->handle,
+			data,
+			33);
+		if (result == -1)
+		{
+			debug("unable to read color from blinkstick");
+		}
+		else
+		{
+			color->red = data[1];
+			color->green = data[2];
+			color->blue = data[3];
+		}
+        // free memory
+		free(data);
+	}
+	else
+	{
+	    const int count = (index + 1) * 3;
+		int max_leds;
+	    const int report_id = determine_report_id(count, &max_leds);
+
+		unsigned char* data = malloc(sizeof(unsigned char) *
+			max_leds * 3 + 2);
+		data[0] = report_id;
+
+		const int result = hid_get_feature_report(blinkstick->handle,
+			data,
+			max_leds * 3 + 2);
+
+		if (result == -1)
+		{
+			debug("unable to read color from blinkstick.");
+		}
+		else
+		{
+			color->red = data[index * 3 + 1];
+			color->green = data[index * 3 + 3];
+			color->blue = data[index * 3 + 2];
+		}
+		// free memory
+		free(data);
+	}
+	return color;
+}
+
 
 bool blinkstick_off(blinkstick_device* blinkstick, const int channel, const int index) {
   return blinkstick_set_color(blinkstick, channel, index, 0, 0, 0);

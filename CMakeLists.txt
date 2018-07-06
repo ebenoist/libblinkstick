@@ -47,4 +47,9 @@ configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/libblinkstick.pc.in
 
 install(FILES ${CMAKE_BINARY_DIR}/libblinkstick.pc DESTINATION "${INSTALL_PKGCONFIG_DIR}")
 
+set(libblinkstick_VERSION_MAJOR 1)
+set(libblinkstick_VERSION_MINOR 0)
+set(libblinkstick_VERSION_PATCH 0)
+
+set(libblinkstick_VERSION "${libblinkstick_VERSION_MAJOR}.${libblinkstick_VERSION_MINOR}.${libblinkstick_VERSION_PATCH}")
 add_subdirectory(src)

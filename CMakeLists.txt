@@ -43,8 +43,13 @@ set(INSTALL_MAN_DIR "${CMAKE_INSTALL_PREFIX}/share/man" CACHE PATH "Installation
 set(INSTALL_PKGCONFIG_DIR "${CMAKE_INSTALL_PREFIX}/share/pkgconfig" CACHE PATH "Installation directory for pkgconfig (.pc) files")
 
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/libblinkstick.pc.in
-		${CMAKE_CURRENT_BINARY_DIR}/libblinkstick.pc @ONLY)
+		${CMAKE_BINARY_DIR}/libblinkstick.pc @ONLY)
 
-install(FILES libblinkstick.pc DESTINATION "${INSTALL_PKGCONFIG_DIR}")
+install(FILES ${CMAKE_BINARY_DIR}/libblinkstick.pc DESTINATION "${INSTALL_PKGCONFIG_DIR}")
 
+set(libblinkstick_VERSION_MAJOR 1)
+set(libblinkstick_VERSION_MINOR 0)
+set(libblinkstick_VERSION_PATCH 0)
+
+set(libblinkstick_VERSION "${libblinkstick_VERSION_MAJOR}.${libblinkstick_VERSION_MINOR}.${libblinkstick_VERSION_PATCH}")
 add_subdirectory(src)

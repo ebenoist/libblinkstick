@@ -36,5 +36,6 @@ Many thanks to the contributors who have helped out over the years.
 * [@jmtd](https://github.com/jmtd)
 * @Raag079
 * [@DeveloperPaul123](https://github.com/DeveloperPaul123)
+* [@shuntaraw](https://github.com/shuntaraw)
 
 And many thanks to @arvydas!

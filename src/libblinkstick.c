@@ -260,9 +260,9 @@ blinkstick_color* blinkstick_get_color(struct blinkstick_device* blinkstick, con
 		}
 		else
 		{
-			color->red = data[index * 3 + 1];
-			color->green = data[index * 3 + 3];
-			color->blue = data[index * 3 + 2];
+			color->red = data[index * 3 + 3];
+			color->green = data[index * 3 + 2];
+			color->blue = data[index * 3 + 4];
 		}
 		// free memory
 		free(data);

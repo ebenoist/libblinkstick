@@ -39,3 +39,6 @@ Many thanks to the contributors who have helped out over the years.
 * [@shuntaraw](https://github.com/shuntaraw)
 
 And many thanks to @arvydas!
+
+## Need a C++ Version?
+* https://github.com/teekae/blinkstickcpp

@@ -86,13 +86,18 @@ blinkstick_device* blinkstick_find() {
   return blinkstick_find_many(1)[0];
 }
 
-unsigned char* build_control_message(const int index, const int channel, unsigned char* color) {
+unsigned char* build_control_message(const int index, const int channel, unsigned char* color, size_t* msg_size) {
+  if (!msg_size)
+  {
+    return NULL;
+  }
 	// Write to the first LED present
 	// this will be the _only_ led for the original blinkstick
     if (index == 0 && channel == 0)
     {
 	    unsigned char* msg =
 		    malloc(sizeof(unsigned char) * BLINKSTICK_SINGLE_LED_MSG_SIZE);
+	    *msg_size = BLINKSTICK_SINGLE_LED_MSG_SIZE;
 	    msg[0] = 0x1;
 	    msg[1] = color[0];
 	    msg[2] = color[1];
@@ -105,6 +110,7 @@ unsigned char* build_control_message(const int index, const int channel, unsigne
 	// assigns the index.
     unsigned char* msg =
 	    malloc(sizeof(unsigned char) * BLINKSTICK_INDEXED_LED_MSG_PACKET_SIZE);
+    *msg_size = BLINKSTICK_SINGLE_LED_MSG_SIZE;
     msg[0] = 0x5;
     msg[1] = channel;
     msg[2] = index;
@@ -173,8 +179,9 @@ bool blinkstick_set_color(blinkstick_device* blinkstick,
 		return false;
 	}
 	unsigned char* color = rgb_to_char(red, green, blue);
-	unsigned char* msg = build_control_message(index, channel, color);
-	const int result = hid_send_feature_report(blinkstick->handle, msg, sizeof(msg));
+	size_t msg_size = 0;
+	unsigned char* msg = build_control_message(index, channel, color, &msg_size);
+	const int result = hid_send_feature_report(blinkstick->handle, msg, msg_size);
 	if (result == -1)
 	{
 		debug("error writing color to device!");

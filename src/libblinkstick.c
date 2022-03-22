@@ -110,7 +110,7 @@ unsigned char* build_control_message(const int index, const int channel, unsigne
 	// assigns the index.
     unsigned char* msg =
 	    malloc(sizeof(unsigned char) * BLINKSTICK_INDEXED_LED_MSG_PACKET_SIZE);
-    *msg_size = BLINKSTICK_SINGLE_LED_MSG_SIZE;
+    *msg_size = BLINKSTICK_INDEXED_LED_MSG_PACKET_SIZE;
     msg[0] = 0x5;
     msg[1] = channel;
     msg[2] = index;

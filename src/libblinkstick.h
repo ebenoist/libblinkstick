@@ -1,6 +1,6 @@
 #pragma once
 
-#include <hidapi/hidapi.h>
+#include <hidapi.h>
 #include <stdbool.h>
 
 #ifdef _WIN32

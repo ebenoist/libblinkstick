@@ -1,12 +1,10 @@
-# LIBRARY
 add_library(libblinkstick libblinkstick.c libblinkstick.h)
 target_include_directories(libblinkstick
         PUBLIC
           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-          $<INSTALL_INTERFACE:include>
-          ${HIDAPI_INCLUDE_DIR})
+          $<INSTALL_INTERFACE:include>)
 
-target_link_libraries(libblinkstick PUBLIC ${HIDAPI_LIBRARY})
+target_link_libraries(libblinkstick PUBLIC hidapi::hidapi)
 set_target_properties(libblinkstick PROPERTIES OUTPUT_NAME blinkstick)
 set_property(TARGET libblinkstick PROPERTY C_STANDARD 11)
 

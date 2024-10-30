@@ -32,12 +32,12 @@ OPTIONS\n\
   --debug turn on debug logging\n");
 }
 
-struct arguments* parse_args(char** flags) {
+struct arguments* parse_args(int argc, char** flags) {
   struct arguments* args = malloc(sizeof(arguments));
   args->count = 1;
   int color_set = 0;
 
-  for (int i = 1; i < sizeof(flags); i++) {
+  for (int i = 1; i < argc; i++) {
     if (flags[i] != NULL) {
       if (strcmp(flags[i], "--count") == 0) {
         args->count = atoi(*(flags + i + 1));
@@ -78,7 +78,7 @@ struct arguments* parse_args(char** flags) {
 }
 
 int main(int argc, char** argv) {
-  struct arguments* args = parse_args(argv);
+  struct arguments* args = parse_args(argc, argv);
   blinkstick_device** devices = blinkstick_find_many(args->count);
 
   for (int j = 0; j < args->count; j++) {

@@ -1,4 +1,4 @@
-PROJECT_NAME = "libBlinkStick"
-PROJECT_BRIEF = "A simple blinkstick library"
+PROJECT_NAME = "libblinkstick"
+PROJECT_BRIEF = "A library for the blinkstick LED controller"
 OUTPUT_DIRECTORY = docs/
 INPUT = @CMAKE_CURRENT_SOURCE_DIR@/src/

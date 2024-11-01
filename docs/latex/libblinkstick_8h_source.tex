@@ -1,0 +1,67 @@
+\doxysection{libblinkstick.\+h}
+\hypertarget{libblinkstick_8h_source}{}\label{libblinkstick_8h_source}\index{src/libblinkstick.h@{src/libblinkstick.h}}
+\mbox{\hyperlink{libblinkstick_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <hidapi.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifdef\ \_WIN32}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ libblinkstick\_EXPORTS}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#define\ BLINKSTICK\_API\ \_\_declspec(dllexport)}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\ \ \ \ \#else}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#define\ BLINKSTICK\_API}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\ \ \ \ \#define\ BLINKSTICK\_API}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00017\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ BLINKSTICK\_VENDOR\_ID\ =\ 8352;\ \ \ \ \textcolor{comment}{//"{}0X20A0"{};}}
+\DoxyCodeLine{00036\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ BLINKSTICK\_PRODUCT\_ID\ =\ 16869;\ \ \textcolor{comment}{//"{}0X41E5"{};}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ BLINKSTICK\_MODE\_MSG\_SIZE\ =\ 2;}
+\DoxyCodeLine{00039\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ BLINKSTICK\_SINGLE\_LED\_MSG\_SIZE\ =\ 4;}
+\DoxyCodeLine{00040\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ BLINKSTICK\_INDEXED\_LED\_MSG\_PACKET\_SIZE\ =\ 6;}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structblinkstick__device}{blinkstick\_device}}\ \{\ hid\_device*\ handle;\ \}\ \mbox{\hyperlink{libblinkstick_8h_a8aa08a79e3f4d7889950e65f0d057b12}{blinkstick\_device}};}
+\DoxyCodeLine{00055\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structblinkstick__color}{blinkstick\_color}}\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ red;}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ green;}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ blue;}
+\DoxyCodeLine{00059\ \}\ \mbox{\hyperlink{structblinkstick__color}{blinkstick\_color}};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00064\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{libblinkstick_8h_a64fdc173e6c7ed6207de851190fba663}{blinkstick\_mode}}\ \{\ unknown=-\/1,\ normal\ =0,\ inverse\ =1,\ smart\_pixel=2\};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00073\ BLINKSTICK\_API\ \mbox{\hyperlink{structblinkstick__device}{blinkstick\_device}}**\ \mbox{\hyperlink{libblinkstick_8h_ac4d2d67b4c5b367fcc253e7ede281f97}{blinkstick\_find\_many}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ count);}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00082\ BLINKSTICK\_API\ \mbox{\hyperlink{structblinkstick__device}{blinkstick\_device}}*\ \mbox{\hyperlink{libblinkstick_8h_a7db1c5cd8b12d4124a33e81eb1f66e3c}{blinkstick\_find}}();}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00094\ BLINKSTICK\_API\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{libblinkstick_8h_ac98105a305dc254fa301782fdb979235}{blinkstick\_set\_color}}(\mbox{\hyperlink{structblinkstick__device}{blinkstick\_device}}*\ blinkstick,}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ channel,}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ index,}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ red,}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ green,}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ blue);}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00107\ BLINKSTICK\_API\ \mbox{\hyperlink{structblinkstick__color}{blinkstick\_color}}*\ \mbox{\hyperlink{libblinkstick_8h_a4b237a417949a75f1db5c7bb3e4ca6c8}{blinkstick\_get\_color}}(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structblinkstick__device}{blinkstick\_device}}*\ blinkstick,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00116\ BLINKSTICK\_API\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{libblinkstick_8h_a341259a215db0cf9f205509b4c88469a}{blinkstick\_set\_mode}}(\mbox{\hyperlink{structblinkstick__device}{blinkstick\_device}}*\ blinkstick,\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{libblinkstick_8h_a64fdc173e6c7ed6207de851190fba663}{blinkstick\_mode}}\ mode);}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00123\ BLINKSTICK\_API\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{libblinkstick_8h_a64fdc173e6c7ed6207de851190fba663}{blinkstick\_mode}}\ \mbox{\hyperlink{libblinkstick_8h_a7802020468484c443550bd61a6aff0b6}{blinkstick\_get\_mode}}(\mbox{\hyperlink{structblinkstick__device}{blinkstick\_device}}*\ blinkstick);}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00129\ BLINKSTICK\_API\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{libblinkstick_8h_a88baf74fb94ce68992e48cd6678e482f}{blinkstick\_off}}(\mbox{\hyperlink{structblinkstick__device}{blinkstick\_device}}*\ blinkstick,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ channel,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00134\ BLINKSTICK\_API\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libblinkstick_8h_a34db17484b24f0ab116c7e4f1351611a}{blinkstick\_debug}}();}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00140\ BLINKSTICK\_API\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libblinkstick_8h_a2296dcd9084a9b4c5a11220449449139}{blinkstick\_destroy}}(\mbox{\hyperlink{structblinkstick__device}{blinkstick\_device}}*\ device);}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00143\ \}}
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

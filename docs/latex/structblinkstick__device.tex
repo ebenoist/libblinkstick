@@ -1,20 +1,34 @@
-\hypertarget{structblinkstick__device}{}\section{blinkstick\+\_\+device Struct Reference}
-\label{structblinkstick__device}\index{blinkstick\+\_\+device@{blinkstick\+\_\+device}}
+\doxysection{blinkstick\+\_\+device Struct Reference}
+\hypertarget{structblinkstick__device}{}\label{structblinkstick__device}\index{blinkstick\_device@{blinkstick\_device}}
+
+
+A \doxylink{structblinkstick__device}{blinkstick\+\_\+device} holds a pointer to the hid device and is used when setting colors, modes, or turning the device off.  
+
+
 
 
 {\ttfamily \#include $<$libblinkstick.\+h$>$}
 
-\subsection*{Public Attributes}
+\doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{structblinkstick__device_a4bb782abadc4e00570554c761a5e0768}\label{structblinkstick__device_a4bb782abadc4e00570554c761a5e0768}} 
-hid\+\_\+device $\ast$ {\bfseries handle}
+\Hypertarget{structblinkstick__device_a4bb782abadc4e00570554c761a5e0768}\label{structblinkstick__device_a4bb782abadc4e00570554c761a5e0768} 
+hid\+\_\+device \texorpdfstring{$\ast$}{*} {\bfseries handle}
 \end{DoxyCompactItemize}
 
 
-\subsection{Detailed Description}
-A \hyperlink{structblinkstick__device}{blinkstick\+\_\+device} holds a pointer to the hid device and is used when setting colors, modes, or turning the device off. Construct this device by using blinkstick\+\_\+find and free it with blinkstick\+\_\+destroy. 
+\doxysubsection{Detailed Description}
+A \doxylink{structblinkstick__device}{blinkstick\+\_\+device} holds a pointer to the hid device and is used when setting colors, modes, or turning the device off. 
+
+Construct this device by using blinkstick\+\_\+find and free it with blinkstick\+\_\+destroy. Example\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{structblinkstick__device}{blinkstick\_device}}*\ device\ =\ \mbox{\hyperlink{libblinkstick_8h_a7db1c5cd8b12d4124a33e81eb1f66e3c}{blinkstick\_find}}();}
+\DoxyCodeLine{\textcolor{comment}{//\ destroy}}
+\DoxyCodeLine{\mbox{\hyperlink{libblinkstick_8h_a2296dcd9084a9b4c5a11220449449139}{blinkstick\_destroy}}(device);}
+
+\end{DoxyCode}
+ 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-src/\hyperlink{libblinkstick_8h}{libblinkstick.\+h}\end{DoxyCompactItemize}
+src/\mbox{\hyperlink{libblinkstick_8h}{libblinkstick.\+h}}\end{DoxyCompactItemize}

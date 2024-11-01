@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['blinkstick_5fdevice',['blinkstick_device',['../libblinkstick_8h.html#afec7f37c4f6d0909ebdd025c714397a8',1,'libblinkstick.h']]]
+  ['blinkstick_5fdevice_0',['blinkstick_device',['../libblinkstick_8h.html#a8aa08a79e3f4d7889950e65f0d057b12',1,'libblinkstick.h']]]
 ];

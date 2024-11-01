@@ -1,93 +1,209 @@
-\hypertarget{libblinkstick_8h}{}\section{src/libblinkstick.h File Reference}
-\label{libblinkstick_8h}\index{src/libblinkstick.\+h@{src/libblinkstick.\+h}}
+\doxysection{src/libblinkstick.h File Reference}
+\hypertarget{libblinkstick_8h}{}\label{libblinkstick_8h}\index{src/libblinkstick.h@{src/libblinkstick.h}}
 
 
 Header for lib\+Blink\+Stick.  
 
 
-{\ttfamily \#include $<$hidapi/hidapi.\+h$>$}\newline
+{\ttfamily \#include $<$hidapi.\+h$>$}\newline
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
-{\ttfamily \#include $<$stdio.\+h$>$}\newline
-{\ttfamily \#include $<$stdlib.\+h$>$}\newline
-{\ttfamily \#include $<$string.\+h$>$}\newline
-{\ttfamily \#include $<$stdarg.\+h$>$}\newline
-\subsection*{Classes}
+\doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{structblinkstick__device}{blinkstick\+\_\+device}
+struct \mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}}
+\begin{DoxyCompactList}\small\item\em A \doxylink{structblinkstick__device}{blinkstick\+\_\+device} holds a pointer to the hid device and is used when setting colors, modes, or turning the device off. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structblinkstick__color}{blinkstick\+\_\+color}}
 \end{DoxyCompactItemize}
-\subsection*{Typedefs}
+\doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-typedef struct \hyperlink{structblinkstick__device}{blinkstick\+\_\+device} \hyperlink{libblinkstick_8h_afec7f37c4f6d0909ebdd025c714397a8}{blinkstick\+\_\+device}
+typedef struct blinkstick\+\_\+device \mbox{\hyperlink{libblinkstick_8h_a8aa08a79e3f4d7889950e65f0d057b12}{blinkstick\+\_\+device}}
+\begin{DoxyCompactList}\small\item\em A \doxylink{structblinkstick__device}{blinkstick\+\_\+device} holds a pointer to the hid device and is used when setting colors, modes, or turning the device off. \end{DoxyCompactList}\item 
+\Hypertarget{libblinkstick_8h_af973e924b211285981e64fba1dfd709e}\label{libblinkstick_8h_af973e924b211285981e64fba1dfd709e} 
+typedef struct blinkstick\+\_\+color {\bfseries blinkstick\+\_\+color}
 \end{DoxyCompactItemize}
-\subsection*{Functions}
+\doxysubsubsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$$\ast$ \hyperlink{libblinkstick_8h_acfbb8d876cba394d9434a2cbd3d9c06f}{blinkstick\+\_\+find\+\_\+many} (int count)
+\Hypertarget{libblinkstick_8h_a64fdc173e6c7ed6207de851190fba663}\label{libblinkstick_8h_a64fdc173e6c7ed6207de851190fba663} 
+enum \mbox{\hyperlink{libblinkstick_8h_a64fdc173e6c7ed6207de851190fba663}{blinkstick\+\_\+mode}} \{ {\bfseries unknown} =-\/1
+, {\bfseries normal} =0
+, {\bfseries inverse} =1
+, {\bfseries smart\+\_\+pixel} =2
+ \}
+\begin{DoxyCompactList}\small\item\em Possible blink stick modes (only valid for Blinkstick Pro). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
 \item 
-\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$ \hyperlink{libblinkstick_8h_ab13232f2ff6cff7c020533ce744b1b4e}{blinkstick\+\_\+find} ()
-\item 
-void \hyperlink{libblinkstick_8h_ac6209d37adaed9cd7b016bde5490a9e4}{blinkstick\+\_\+set\+\_\+color} (\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$device, int index, int red, int green, int blue)
-\item 
-void \hyperlink{libblinkstick_8h_a1b9476d117feba688ab2b8d305ce7633}{blinkstick\+\_\+off} (\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$device, int index)
-\item 
-\mbox{\Hypertarget{libblinkstick_8h_ad6d64b063b3b5fd43a51899521daa645}\label{libblinkstick_8h_ad6d64b063b3b5fd43a51899521daa645}} 
-void {\bfseries blinkstick\+\_\+debug} ()
-\item 
-void \hyperlink{libblinkstick_8h_a31a61d714c9bd52c47cd9bad5f585b92}{blinkstick\+\_\+destroy} (\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$device)
-\end{DoxyCompactItemize}
+BLINKSTICK\+\_\+\+API \mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{libblinkstick_8h_ac4d2d67b4c5b367fcc253e7ede281f97}{blinkstick\+\_\+find\+\_\+many}} (const int count)
+\begin{DoxyCompactList}\small\item\em Given a count will return a pointer array of blinkstick devices. This will abort if the number found is less than the given count. \end{DoxyCompactList}\item 
+BLINKSTICK\+\_\+\+API \mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{libblinkstick_8h_a7db1c5cd8b12d4124a33e81eb1f66e3c}{blinkstick\+\_\+find}} ()
+\begin{DoxyCompactList}\small\item\em Find the first blinkstick device on the bus registered with HID. \end{DoxyCompactList}\item 
+BLINKSTICK\+\_\+\+API bool \mbox{\hyperlink{libblinkstick_8h_ac98105a305dc254fa301782fdb979235}{blinkstick\+\_\+set\+\_\+color}} (\mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*}blinkstick, const int channel, const int index, const int red, const int green, const int blue)
+\begin{DoxyCompactList}\small\item\em Sets the LED at the given index and channel to the specified color for the provided device. \end{DoxyCompactList}\item 
+BLINKSTICK\+\_\+\+API \mbox{\hyperlink{structblinkstick__color}{blinkstick\+\_\+color}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{libblinkstick_8h_a4b237a417949a75f1db5c7bb3e4ca6c8}{blinkstick\+\_\+get\+\_\+color}} (struct \mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*}blinkstick, const int index)
+\begin{DoxyCompactList}\small\item\em Reads the color from the blinkstick at a given index. \end{DoxyCompactList}\item 
+BLINKSTICK\+\_\+\+API bool \mbox{\hyperlink{libblinkstick_8h_a341259a215db0cf9f205509b4c88469a}{blinkstick\+\_\+set\+\_\+mode}} (\mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*}blinkstick, enum \mbox{\hyperlink{libblinkstick_8h_a64fdc173e6c7ed6207de851190fba663}{blinkstick\+\_\+mode}} mode)
+\begin{DoxyCompactList}\small\item\em Set the mode of the blinkstick. \end{DoxyCompactList}\item 
+BLINKSTICK\+\_\+\+API enum \mbox{\hyperlink{libblinkstick_8h_a64fdc173e6c7ed6207de851190fba663}{blinkstick\+\_\+mode}} \mbox{\hyperlink{libblinkstick_8h_a7802020468484c443550bd61a6aff0b6}{blinkstick\+\_\+get\+\_\+mode}} (\mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*}blinkstick)
+\begin{DoxyCompactList}\small\item\em Read the mode currently set on the blinkstick. \end{DoxyCompactList}\item 
+\Hypertarget{libblinkstick_8h_a88baf74fb94ce68992e48cd6678e482f}\label{libblinkstick_8h_a88baf74fb94ce68992e48cd6678e482f} 
+BLINKSTICK\+\_\+\+API bool {\bfseries blinkstick\+\_\+off} (\mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*}blinkstick, const int channel, const int index)
+\begin{DoxyCompactList}\small\item\em Turns off the led at the specified index for the provided device. This is the same as using set\+\_\+color with the RGB value (0, 0, 0) \end{DoxyCompactList}\item 
+\Hypertarget{libblinkstick_8h_a34db17484b24f0ab116c7e4f1351611a}\label{libblinkstick_8h_a34db17484b24f0ab116c7e4f1351611a} 
+BLINKSTICK\+\_\+\+API void {\bfseries blinkstick\+\_\+debug} ()
+\begin{DoxyCompactList}\small\item\em Turns on debug logging. \end{DoxyCompactList}\item 
+BLINKSTICK\+\_\+\+API void \mbox{\hyperlink{libblinkstick_8h_a2296dcd9084a9b4c5a11220449449139}{blinkstick\+\_\+destroy}} (\mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*}device)
+\begin{DoxyCompactList}\small\item\em Frees the given blinkstick device. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\subsection{Detailed Description}
+\doxysubsection{Detailed Description}
 Header for lib\+Blink\+Stick. 
 
-lib\+Blink\+Stick is meant to to be a simple library for talking to a blinkstick Both the blinkstick square and blinkstick v1.\+1 are officially supported and it\textquotesingle{}s likely that other devices work as well.
+lib\+Blink\+Stick is meant to to be a simple library for talking to a blinkstick. The Blink\+Stick Square, Blink\+Stick v1.\+1, and the Blink\+Stick Pro are officially supported and it\textquotesingle{}s likely that other devices work as well.
 
-lib\+Blink\+Stick depends on hidapi for interacting with the U\+SB devices, but otherwise has no other dependencies.
+lib\+Blink\+Stick depends on hidapi for interacting with the USB devices, but otherwise has no other dependencies.
 
-Included are functions to turn on and off any of the L\+E\+Ds and change their color via an rgb color. Multiple devices are supported. 
+Included are functions to turn on and off any of the LEDs and change their color via an rgb color. Multiple devices are supported. 
 
-\subsection{Typedef Documentation}
-\mbox{\Hypertarget{libblinkstick_8h_afec7f37c4f6d0909ebdd025c714397a8}\label{libblinkstick_8h_afec7f37c4f6d0909ebdd025c714397a8}} 
-\index{libblinkstick.\+h@{libblinkstick.\+h}!blinkstick\+\_\+device@{blinkstick\+\_\+device}}
-\index{blinkstick\+\_\+device@{blinkstick\+\_\+device}!libblinkstick.\+h@{libblinkstick.\+h}}
-\subsubsection{\texorpdfstring{blinkstick\+\_\+device}{blinkstick\_device}}
-{\footnotesize\ttfamily typedef struct \hyperlink{structblinkstick__device}{blinkstick\+\_\+device}  \hyperlink{structblinkstick__device}{blinkstick\+\_\+device}}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{libblinkstick_8h_a8aa08a79e3f4d7889950e65f0d057b12}\index{libblinkstick.h@{libblinkstick.h}!blinkstick\_device@{blinkstick\_device}}
+\index{blinkstick\_device@{blinkstick\_device}!libblinkstick.h@{libblinkstick.h}}
+\doxysubsubsection{\texorpdfstring{blinkstick\_device}{blinkstick\_device}}
+{\footnotesize\ttfamily \label{libblinkstick_8h_a8aa08a79e3f4d7889950e65f0d057b12} 
+typedef struct blinkstick\+\_\+device blinkstick\+\_\+device}
 
-A \hyperlink{structblinkstick__device}{blinkstick\+\_\+device} holds a pointer to the hid device and is used when setting colors, modes, or turning the device off. Construct this device by using blinkstick\+\_\+find and free it with blinkstick\+\_\+destroy. 
 
-\subsection{Function Documentation}
-\mbox{\Hypertarget{libblinkstick_8h_a31a61d714c9bd52c47cd9bad5f585b92}\label{libblinkstick_8h_a31a61d714c9bd52c47cd9bad5f585b92}} 
-\index{libblinkstick.\+h@{libblinkstick.\+h}!blinkstick\+\_\+destroy@{blinkstick\+\_\+destroy}}
-\index{blinkstick\+\_\+destroy@{blinkstick\+\_\+destroy}!libblinkstick.\+h@{libblinkstick.\+h}}
-\subsubsection{\texorpdfstring{blinkstick\+\_\+destroy()}{blinkstick\_destroy()}}
-{\footnotesize\ttfamily void blinkstick\+\_\+destroy (\begin{DoxyParamCaption}\item[{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$}]{device }\end{DoxyParamCaption})}
 
-Frees the given blinkstick device \mbox{\Hypertarget{libblinkstick_8h_ab13232f2ff6cff7c020533ce744b1b4e}\label{libblinkstick_8h_ab13232f2ff6cff7c020533ce744b1b4e}} 
-\index{libblinkstick.\+h@{libblinkstick.\+h}!blinkstick\+\_\+find@{blinkstick\+\_\+find}}
-\index{blinkstick\+\_\+find@{blinkstick\+\_\+find}!libblinkstick.\+h@{libblinkstick.\+h}}
-\subsubsection{\texorpdfstring{blinkstick\+\_\+find()}{blinkstick\_find()}}
-{\footnotesize\ttfamily \hyperlink{structblinkstick__device}{blinkstick\+\_\+device}$\ast$ blinkstick\+\_\+find (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+A \doxylink{structblinkstick__device}{blinkstick\+\_\+device} holds a pointer to the hid device and is used when setting colors, modes, or turning the device off. 
 
-Find the first blinkstick device on the bus registered with H\+ID. \mbox{\Hypertarget{libblinkstick_8h_acfbb8d876cba394d9434a2cbd3d9c06f}\label{libblinkstick_8h_acfbb8d876cba394d9434a2cbd3d9c06f}} 
-\index{libblinkstick.\+h@{libblinkstick.\+h}!blinkstick\+\_\+find\+\_\+many@{blinkstick\+\_\+find\+\_\+many}}
-\index{blinkstick\+\_\+find\+\_\+many@{blinkstick\+\_\+find\+\_\+many}!libblinkstick.\+h@{libblinkstick.\+h}}
-\subsubsection{\texorpdfstring{blinkstick\+\_\+find\+\_\+many()}{blinkstick\_find\_many()}}
-{\footnotesize\ttfamily \hyperlink{structblinkstick__device}{blinkstick\+\_\+device}$\ast$$\ast$ blinkstick\+\_\+find\+\_\+many (\begin{DoxyParamCaption}\item[{int}]{count }\end{DoxyParamCaption})}
+Construct this device by using blinkstick\+\_\+find and free it with blinkstick\+\_\+destroy. Example\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{structblinkstick__device}{blinkstick\_device}}*\ device\ =\ blinkstick\_find();}
+\DoxyCodeLine{\textcolor{comment}{//\ destroy}}
+\DoxyCodeLine{blinkstick\_destroy(device);}
 
-Given a count will return a pointer array of blinkstick devices. This will abort if the number found is less than the given count. \mbox{\Hypertarget{libblinkstick_8h_a1b9476d117feba688ab2b8d305ce7633}\label{libblinkstick_8h_a1b9476d117feba688ab2b8d305ce7633}} 
-\index{libblinkstick.\+h@{libblinkstick.\+h}!blinkstick\+\_\+off@{blinkstick\+\_\+off}}
-\index{blinkstick\+\_\+off@{blinkstick\+\_\+off}!libblinkstick.\+h@{libblinkstick.\+h}}
-\subsubsection{\texorpdfstring{blinkstick\+\_\+off()}{blinkstick\_off()}}
-{\footnotesize\ttfamily void blinkstick\+\_\+off (\begin{DoxyParamCaption}\item[{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$}]{device,  }\item[{int}]{index }\end{DoxyParamCaption})}
+\end{DoxyCode}
+ 
 
-Turns off the led at the specified index for the provided device.
+\doxysubsection{Function Documentation}
+\Hypertarget{libblinkstick_8h_a2296dcd9084a9b4c5a11220449449139}\index{libblinkstick.h@{libblinkstick.h}!blinkstick\_destroy@{blinkstick\_destroy}}
+\index{blinkstick\_destroy@{blinkstick\_destroy}!libblinkstick.h@{libblinkstick.h}}
+\doxysubsubsection{\texorpdfstring{blinkstick\_destroy()}{blinkstick\_destroy()}}
+{\footnotesize\ttfamily \label{libblinkstick_8h_a2296dcd9084a9b4c5a11220449449139} 
+BLINKSTICK\+\_\+\+API void blinkstick\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*}}]{device}{}\end{DoxyParamCaption})}
 
-This is the same as using set\+\_\+color with the R\+GB value (0, 0, 0) \mbox{\Hypertarget{libblinkstick_8h_ac6209d37adaed9cd7b016bde5490a9e4}\label{libblinkstick_8h_ac6209d37adaed9cd7b016bde5490a9e4}} 
-\index{libblinkstick.\+h@{libblinkstick.\+h}!blinkstick\+\_\+set\+\_\+color@{blinkstick\+\_\+set\+\_\+color}}
-\index{blinkstick\+\_\+set\+\_\+color@{blinkstick\+\_\+set\+\_\+color}!libblinkstick.\+h@{libblinkstick.\+h}}
-\subsubsection{\texorpdfstring{blinkstick\+\_\+set\+\_\+color()}{blinkstick\_set\_color()}}
-{\footnotesize\ttfamily void blinkstick\+\_\+set\+\_\+color (\begin{DoxyParamCaption}\item[{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device} $\ast$}]{device,  }\item[{int}]{index,  }\item[{int}]{red,  }\item[{int}]{green,  }\item[{int}]{blue }\end{DoxyParamCaption})}
 
-Sets the L\+ED at the given index to the specified color for the provided device 
+
+Frees the given blinkstick device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device} & the device to free. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{libblinkstick_8h_a7db1c5cd8b12d4124a33e81eb1f66e3c}\index{libblinkstick.h@{libblinkstick.h}!blinkstick\_find@{blinkstick\_find}}
+\index{blinkstick\_find@{blinkstick\_find}!libblinkstick.h@{libblinkstick.h}}
+\doxysubsubsection{\texorpdfstring{blinkstick\_find()}{blinkstick\_find()}}
+{\footnotesize\ttfamily \label{libblinkstick_8h_a7db1c5cd8b12d4124a33e81eb1f66e3c} 
+BLINKSTICK\+\_\+\+API \mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*} blinkstick\+\_\+find (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Find the first blinkstick device on the bus registered with HID. 
+
+Note the caller is responsible for deleting the instance of the \doxylink{structblinkstick__device}{blinkstick\+\_\+device} using blinkstick\+\_\+destroy. \begin{DoxyReturn}{Returns}
+pointer to a \doxylink{structblinkstick__device}{blinkstick\+\_\+device}. 
+\end{DoxyReturn}
+\Hypertarget{libblinkstick_8h_ac4d2d67b4c5b367fcc253e7ede281f97}\index{libblinkstick.h@{libblinkstick.h}!blinkstick\_find\_many@{blinkstick\_find\_many}}
+\index{blinkstick\_find\_many@{blinkstick\_find\_many}!libblinkstick.h@{libblinkstick.h}}
+\doxysubsubsection{\texorpdfstring{blinkstick\_find\_many()}{blinkstick\_find\_many()}}
+{\footnotesize\ttfamily \label{libblinkstick_8h_ac4d2d67b4c5b367fcc253e7ede281f97} 
+BLINKSTICK\+\_\+\+API \mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} blinkstick\+\_\+find\+\_\+many (\begin{DoxyParamCaption}\item[{const int}]{count}{}\end{DoxyParamCaption})}
+
+
+
+Given a count will return a pointer array of blinkstick devices. This will abort if the number found is less than the given count. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em count} & the number of blinkstick devices to find. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+an array of blinkstick device pointers. 
+\end{DoxyReturn}
+\Hypertarget{libblinkstick_8h_a4b237a417949a75f1db5c7bb3e4ca6c8}\index{libblinkstick.h@{libblinkstick.h}!blinkstick\_get\_color@{blinkstick\_get\_color}}
+\index{blinkstick\_get\_color@{blinkstick\_get\_color}!libblinkstick.h@{libblinkstick.h}}
+\doxysubsubsection{\texorpdfstring{blinkstick\_get\_color()}{blinkstick\_get\_color()}}
+{\footnotesize\ttfamily \label{libblinkstick_8h_a4b237a417949a75f1db5c7bb3e4ca6c8} 
+BLINKSTICK\+\_\+\+API \mbox{\hyperlink{structblinkstick__color}{blinkstick\+\_\+color}} \texorpdfstring{$\ast$}{*} blinkstick\+\_\+get\+\_\+color (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*}}]{blinkstick}{, }\item[{const int}]{index}{}\end{DoxyParamCaption})}
+
+
+
+Reads the color from the blinkstick at a given index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em blinkstick} & pointer to the blinckstick\+\_\+device to read from. \\
+\hline
+{\em index} & the index of the LED to read from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to a \doxylink{structblinkstick__color}{blinkstick\+\_\+color} struct containing the read color. 
+\end{DoxyReturn}
+\Hypertarget{libblinkstick_8h_a7802020468484c443550bd61a6aff0b6}\index{libblinkstick.h@{libblinkstick.h}!blinkstick\_get\_mode@{blinkstick\_get\_mode}}
+\index{blinkstick\_get\_mode@{blinkstick\_get\_mode}!libblinkstick.h@{libblinkstick.h}}
+\doxysubsubsection{\texorpdfstring{blinkstick\_get\_mode()}{blinkstick\_get\_mode()}}
+{\footnotesize\ttfamily \label{libblinkstick_8h_a7802020468484c443550bd61a6aff0b6} 
+BLINKSTICK\+\_\+\+API enum \mbox{\hyperlink{libblinkstick_8h_a64fdc173e6c7ed6207de851190fba663}{blinkstick\+\_\+mode}} blinkstick\+\_\+get\+\_\+mode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*}}]{blinkstick}{}\end{DoxyParamCaption})}
+
+
+
+Read the mode currently set on the blinkstick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em blinkstick} & pointer to the blinkstick device. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the current mode. 
+\end{DoxyReturn}
+\Hypertarget{libblinkstick_8h_ac98105a305dc254fa301782fdb979235}\index{libblinkstick.h@{libblinkstick.h}!blinkstick\_set\_color@{blinkstick\_set\_color}}
+\index{blinkstick\_set\_color@{blinkstick\_set\_color}!libblinkstick.h@{libblinkstick.h}}
+\doxysubsubsection{\texorpdfstring{blinkstick\_set\_color()}{blinkstick\_set\_color()}}
+{\footnotesize\ttfamily \label{libblinkstick_8h_ac98105a305dc254fa301782fdb979235} 
+BLINKSTICK\+\_\+\+API bool blinkstick\+\_\+set\+\_\+color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*}}]{blinkstick}{, }\item[{const int}]{channel}{, }\item[{const int}]{index}{, }\item[{const int}]{red}{, }\item[{const int}]{green}{, }\item[{const int}]{blue}{}\end{DoxyParamCaption})}
+
+
+
+Sets the LED at the given index and channel to the specified color for the provided device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em blinkstick} & pointer to the \doxylink{structblinkstick__device}{blinkstick\+\_\+device} to modify. \\
+\hline
+{\em channel} & the channel to set the LED color on. \\
+\hline
+{\em index} & which LED to set the color of. \\
+\hline
+{\em red} & the red component of the new color. \\
+\hline
+{\em green} & the green component of the new color. \\
+\hline
+{\em blue} & the blue component of the new color. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{libblinkstick_8h_a341259a215db0cf9f205509b4c88469a}\index{libblinkstick.h@{libblinkstick.h}!blinkstick\_set\_mode@{blinkstick\_set\_mode}}
+\index{blinkstick\_set\_mode@{blinkstick\_set\_mode}!libblinkstick.h@{libblinkstick.h}}
+\doxysubsubsection{\texorpdfstring{blinkstick\_set\_mode()}{blinkstick\_set\_mode()}}
+{\footnotesize\ttfamily \label{libblinkstick_8h_a341259a215db0cf9f205509b4c88469a} 
+BLINKSTICK\+\_\+\+API bool blinkstick\+\_\+set\+\_\+mode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structblinkstick__device}{blinkstick\+\_\+device}} \texorpdfstring{$\ast$}{*}}]{blinkstick}{, }\item[{enum \mbox{\hyperlink{libblinkstick_8h_a64fdc173e6c7ed6207de851190fba663}{blinkstick\+\_\+mode}}}]{mode}{}\end{DoxyParamCaption})}
+
+
+
+Set the mode of the blinkstick. 
+
+Possible modes are "{}normal"{} (non-\/inverse LED control), "{}inverse"{} (LED values are inverted) and "{}smart"{} (LEDs are WS2812 smart LEDs). Note that you\textquotesingle{}ll need to implement a delay after setting the mode before setting the color on the blinkstick device. 

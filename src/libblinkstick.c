@@ -24,7 +24,7 @@ void debug(const char* fmt, ...) {
 
 void blinkstick_debug() {
   print_debug = true;
-  debug("STARTING LIBBLINKSTICK WITH DEBUG LOGGING");
+  debug("===STARTING LIBBLINKSTICK WITH DEBUG LOGGING===");
 }
 
 unsigned char* rgb_to_char(int red, int green, int blue) {
@@ -45,8 +45,7 @@ blinkstick_device* blinkstick_factory(hid_device* handle) {
 blinkstick_device** blinkstick_find_many(const int count) {
   blinkstick_device** devices = malloc(sizeof(blinkstick_device*) * count);
   // initialize the devices
-  for (int i = 0; i < count; i++)
-  {
+  for (int i = 0; i < count; i++) {
 	  devices[i] = blinkstick_factory(NULL);
   }
 
@@ -54,16 +53,14 @@ blinkstick_device** blinkstick_find_many(const int count) {
   const int res = hid_init();
   if (res != 0) {
     debug("failed to initialize hid");
-	return devices;
-  }
-
-  struct hid_device_info * device_info = 
-	  hid_enumerate(BLINKSTICK_VENDOR_ID, BLINKSTICK_PRODUCT_ID);
-  if (device_info == NULL)
-  {
 	  return devices;
   }
-  
+
+  struct hid_device_info * device_info = hid_enumerate(BLINKSTICK_VENDOR_ID, BLINKSTICK_PRODUCT_ID);
+  if (device_info == NULL) {
+	  return devices;
+  }
+
   devices[0]->handle = hid_open_path(device_info->path);
   debug("found device: %s", device_info->path);
 

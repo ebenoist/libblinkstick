@@ -47,9 +47,9 @@ struct arguments* parse_args(int argc, char** flags) {
         args->index = atoi(*(flags + i + 1));
       }
 
-	  if (strcmp(flags[i], "--channel") == 0) {
-		  args->channel = atoi(*(flags + i + 1));
-	  }
+      if (strcmp(flags[i], "--channel") == 0) {
+        args->channel = atoi(*(flags + i + 1));
+      }
 
       if (strcmp(flags[i], "--debug") == 0) {
         blinkstick_debug();
@@ -85,11 +85,9 @@ int main(int argc, char** argv) {
     // set the color
     blinkstick_set_color(devices[j], args->channel, args->index, args->red, args->green,
                          args->blue);
-    // free the device
     blinkstick_destroy(devices[j]);
   }
 
-  // possibly unecessary, but good practice nonetheless. 
   free(args);
   return 0;
 }

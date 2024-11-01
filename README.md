@@ -30,6 +30,7 @@ OPTIONS
   --color set the color using a three rgb values
   --count set the number of blinkstick devices to address
   --index which led should be set
+  --channel which channel to use (BlinkStick Pro)
   --debug turn on debug logging
 ```
 

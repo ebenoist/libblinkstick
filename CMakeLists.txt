@@ -34,6 +34,15 @@ if(BUILD_DOCS)
   endif (DOXYGEN_FOUND)
 endif(BUILD_DOCS)
 
+file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h)
+add_custom_target(
+    clangformat
+    ALL
+    COMMAND clang-format
+    -style=Chromium
+    -i
+    ${ALL_SOURCE_FILES}
+)
 
 set(INSTALL_BIN_DIR "${CMAKE_INSTALL_PREFIX}/bin" CACHE PATH "Installation directory for executables")
 set(INSTALL_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib" CACHE PATH "Installation directory for libraries")

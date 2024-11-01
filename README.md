@@ -44,7 +44,7 @@ Many thanks to the contributors who have helped out over the years.
 * [@rstephan](https://github.com/rstephan)
 * [@Tidalikk](https://github.com/Tidalikk)
 
-And many thanks to @arvydas!
+And many thanks to [@arvydas](https://github.com/arvydas)!
 
 ## Need a C++ Version?
 

@@ -19,19 +19,18 @@ extern "C" {
 
 /**
  * @file libblinkstick.h
- * @brief Header for libBlinkStick
+ * @brief Header for libblinkstick
  *
- * libBlinkStick is meant to to be a simple library for talking to a blinkstick.
+ * libblinkstick is meant to to be a simple library for talking to a blinkstick.
  * The BlinkStick Square, BlinkStick v1.1, and the BlinkStick Pro are officially
  * supported and it's likely that other devices work as well.
  *
- * libBlinkStick depends on hidapi for interacting with the USB devices, but
+ * libblinkstick depends on hidapi for interacting with the USB devices, but
  * otherwise has no other dependencies.
  *
  * Included are functions to turn on and off any of the LEDs and change their
  * color via an rgb color. Multiple devices are supported.
  */
-
 static int const BLINKSTICK_VENDOR_ID = 8352;    //"0X20A0";
 static int const BLINKSTICK_PRODUCT_ID = 16869;  //"0X41E5";
 
@@ -54,25 +53,23 @@ static int const BLINKSTICK_INDEXED_LED_MSG_PACKET_SIZE = 6;
 typedef struct blinkstick_device {
   hid_device* handle;
 } blinkstick_device;
-typedef struct blinkstick_color {
-  unsigned char red;
-  unsigned char green;
-  unsigned char blue;
+
+// Struct for storing an RGB color value
+typedef struct {
+  unsigned char red;    // Red component (0-255)
+  unsigned char green;  // Green component (0-255)
+  unsigned char blue;   // Blue component (0-255)
 } blinkstick_color;
 
 /**
  * @brief Possible blink stick modes (only valid for Blinkstick Pro).
  */
-enum blinkstick_mode { unknown = -1, normal = 0, inverse = 1, smart_pixel = 2 };
-
-/**
- * @brief Given a count will return a pointer array of blinkstick
- * devices. This will abort if the number found is less than
- * the given count.
- * @param count the number of blinkstick devices to find.
- * @return an array of blinkstick device pointers.
- */
-BLINKSTICK_API blinkstick_device** blinkstick_find_many(const int count);
+typedef enum blinkstick_mode {
+  UNKNOWN_MODE = -1,    // Unknown mode
+  NORMAL_MODE = 0,      // Normal (non-inverse) LED control
+  INVERSE_MODE = 1,     // Inverse LED control
+  SMART_PIXEL_MODE = 2  // Smart pixel (WS2812) LED control
+} blinkstick_mode;
 
 /**
  * @brief Find the first blinkstick device on the bus registered
@@ -82,6 +79,15 @@ BLINKSTICK_API blinkstick_device** blinkstick_find_many(const int count);
  * @return pointer to a blinkstick_device.
  */
 BLINKSTICK_API blinkstick_device* blinkstick_find();
+
+/**
+ * @brief Given a count will return a pointer array of blinkstick
+ * devices. This will abort if the number found is less than
+ * the given count.
+ * @param count the number of blinkstick devices to find.
+ * @return an array of blinkstick device pointers.
+ */
+BLINKSTICK_API blinkstick_device** blinkstick_find_many(const int count);
 
 /**
  * @brief Sets the LED at the given index and channel to the specified color for

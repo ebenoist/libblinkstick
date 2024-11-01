@@ -155,7 +155,7 @@ enum blinkstick_mode blinkstick_get_mode(blinkstick_device *blinkstick)
 	if (result == -1)
 	{
 		debug("error reading mode from device.");
-		return unknown;
+		return UNKNOWN_MODE;
 	}
 
     const enum blinkstick_mode return_mode = data[1];
@@ -268,7 +268,7 @@ blinkstick_color* blinkstick_get_color(struct blinkstick_device* blinkstick, con
 			color->green = data[index * 3 + 2];
 			color->blue = data[index * 3 + 4];
 		}
-		// free memory
+
 		free(data);
 	}
 	return color;
